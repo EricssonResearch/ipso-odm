@@ -1,0 +1,24 @@
+{
+  "name": "ipso2odm",
+  "version": "0.1.0",
+  "description": "IPSO XML schema to One Data Model SDF converter",
+  "main": "ipso2odm.js",
+  "dependencies": {
+    "ajv": "^6.10.1",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "npm": "^6.9.2",
+    "xmldoc": "^1.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EricssonResearch/ipso-odm.git"
+  },
+  "author": "Ari Keränen",
+  "license": "BSD-3-Clause"
+}
