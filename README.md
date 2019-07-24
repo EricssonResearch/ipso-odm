@@ -10,11 +10,11 @@ Automated translation of [IPSO/LwM2M models](http://www.openmobilealliance.org/w
 
 ## Usage
 
-`node ipso2odm.js [file-name]`
+`node ipso2odm [file-name]`
 
 ## Example
 
-`node ipso2odm.js samples/load.xml`
+`node ipso2odm samples/load.xml`
 
 ## Web service mode
 
@@ -30,14 +30,14 @@ The program is picky with EOL characters so the XML schema files should be sent 
 
 Debugging prints can be enabled by adding `ipso2odm` to `DEBUG` environment variable. For example:
 
-`DEBUG=ipso2odm node ipso2odm.js samples/load.xml`
+`DEBUG=ipso2odm node ipso2odm samples/load.xml`
 
 ## ODM linter
 
 The odmlint.js program can check if the given ODM SDF file matches to the SDF schema. By default the [sdf-alt-schema.json](sdf-alt-schema.json) is used but other schema file (e.g., [sdf-schema.json](https://github.com/one-data-model/language/blob/master/sdf-schema.json)) can be given as a second parameter.
 
-Usage: `node odmlint.js odmfile.json [schemafile.json]`
+Usage: `node odmlint odmfile.json [schemafile.json]`
 
-Example: `node odmlint.js samples/bitmap.json`
+Example: `node odmlint samples/bitmap.json`
 
 If the given ODM SDF file doesn't match the schema, error(s) are described as defined here: https://github.com/epoberezkin/ajv#error-objects

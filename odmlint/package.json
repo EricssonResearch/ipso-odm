@@ -1,10 +1,10 @@
 {
-  "name": "ipso-odm",
+  "name": "odmlint",
   "version": "0.1.0",
-  "description": "Tools for OneDM SDF / IPSO model conversions",
+  "description": "One Data Model SDF linter",
+  "main": "odmlint.js",
   "dependencies": {
-    "ipso2odm": "file:ipso2odm",
-    "odmlint": "file:odmlint"
+    "ajv": "^6.10.1"
   },
   "devDependencies": {},
   "scripts": {

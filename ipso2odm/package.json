@@ -1,10 +1,14 @@
 {
-  "name": "ipso-odm",
+  "name": "ipso2odm",
   "version": "0.1.0",
-  "description": "Tools for OneDM SDF / IPSO model conversions",
+  "description": "IPSO XML schema to One Data Model SDF converter",
+  "main": "ipso2odm.js",
   "dependencies": {
-    "ipso2odm": "file:ipso2odm",
-    "odmlint": "file:odmlint"
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "npm": "^6.9.2",
+    "xmldoc": "^1.1.2"
   },
   "devDependencies": {},
   "scripts": {
