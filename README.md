@@ -24,7 +24,7 @@ The HTTP port where the program is accepting requests can be defined with the `P
 
 The program is picky with EOL characters so the XML schema files should be sent "as-is". For example:
 
-`curl --data-binary "@3308.xml" http://localhost:8083/ipso2odm`
+`curl --data-binary "@samples/load.xml" http://localhost:8083/ipso2odm`
 
 ## Debugging
 
