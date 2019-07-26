@@ -123,23 +123,20 @@
         "$comment": {
           "type": "string"
         },
-        "minvalue": {
+        "minimum": {
           "type": "number"
         },
-        "maxvalue": {
+        "maximum": {
           "type:": "number"
+        },
+        "unit": {
+          "type" : "string"
         },
         "items": {
           "type": "object",
           "properties" : {
             "type" : {
-              "type": "string",
-              "minvalue": {
-                "type": "number"
-              },
-              "maxvalue": {
-                "type:": "number"
-              }
+              "type": "string"
             }
           }
         }

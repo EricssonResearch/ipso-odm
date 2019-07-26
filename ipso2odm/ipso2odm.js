@@ -11,7 +11,7 @@ const helmet = require('helmet');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "20190722";
+const VERSION = "20190726";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 const DEF_IS_OBSERVABLE = true;
@@ -32,7 +32,7 @@ if (process.argv.length == 3) { /* file as command line parameter */
       let odm = createOdm(data);
       console.log(JSON.stringify(odm, null, 2));
     } catch (err) {
-      debug("Can't convert. " + err);
+      console.log("Can't convert. " + err);
     }
     });
 }
@@ -132,6 +132,7 @@ function createOdm(data) {
       odmItem.readOnly = isReadOnly(res);
       odmItem.observable = DEF_IS_OBSERVABLE
       addResourceType(odmItem, res);
+      addResourceDetails(odmItem, res);
     }
   });
 
@@ -184,7 +185,7 @@ function addResourceType(odmProp, lwm2mElement) {
       break;
     case "unsigned integer":
       type = "integer";
-      odmProp.minvalue = 0;
+      odmProp.minimum = 0;
       break;
     case "opaque":
       subtype = "bytestring";
@@ -214,6 +215,31 @@ function addResourceType(odmProp, lwm2mElement) {
     if (subtype) {
       odmProp.subtype = subtype;
     }
+  }
+
+}
+
+/**
+ * Adds "minimum", "maximum", and "unit" ODM element(s) to the given ODM
+ * Property element based on information in the given LwM2M schema element.
+ * @param {Object} odmProp The ODM property element
+ * @param {XmlElement} lwm2mElement The LwM2M schema element
+ */
+function addResourceDetails(odmProp, lwm2mElement) {
+  let lwUnit = lwm2mElement.valueWithPath("Units");
+  let lwRange = lwm2mElement.valueWithPath("RangeEnumeration");
+
+  if (lwUnit) {
+    odmProp.units = lwUnit;
+  }
+
+  if (lwRange) {
+    if (lwRange.includes("..")) {
+      let limits = lwRange.split("..");
+      odmProp.minimum = limits[0];
+      odmProp.maximum = limits[1];
+    }
+    /* TODO: handle other range types */
   }
 
 }
