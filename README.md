@@ -47,3 +47,11 @@ Usage: `node odmlint odmfile.json [schemafile.json]`
 Example: `node odmlint samples/bitmap.json`
 
 If the given ODM SDF file doesn't match the schema, error(s) are described as defined here: https://github.com/epoberezkin/ajv#error-objects
+
+## IPSO ID mapper
+
+The ipsoidmapper.js can generate a protocol binding ID mapping file out of a set of IPSO/LwM2M schema files.
+
+Usage: `node ipsoidmapper [file-name(s)]`
+
+Example: `node ipsoidmapper samples/*.xml`

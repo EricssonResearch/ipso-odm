@@ -1,0 +1,21 @@
+{
+  "name": "ipsoidmapper",
+  "version": "0.1.0",
+  "description": "One Data Model ID to IPSO ID mapper",
+  "main": "ipsoidmapper.js",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "npm": "^6.9.2",
+    "xmldoc": "^1.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EricssonResearch/ipso-odm.git"
+  },
+  "author": "Ari Keränen",
+  "license": "BSD-3-Clause"
+}
