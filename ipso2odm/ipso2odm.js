@@ -11,14 +11,28 @@ const helmet = require('helmet');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "20190726";
+const VERSION = "20191025";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
-const DEF_IS_OBSERVABLE = true;
+
+const ODM_FILE_PREFIX = "odmobject-";
+const ODM_FILE_SUFFIX = ".sdf.json";
+
+/* How to convert Object names into ODM compatible names */
+const NAMEFIX_RE = new RegExp('[\\s,\\/]', "g");
+const NAMEFIX_CHAR = "_";
 
 /* default values if can't parse from input file */
-const DEF_COPYRIGHT = "TBD";
-const DEF_LICENSE = "TBD"
+const DEF_COPYRIGHT = "Copyright (c) 2018, 2019 IPSO";
+const DEF_LICENSE =
+  "https://github.com/one-data-model/oneDM/blob/master/LICENSE";
+
+/* try to read copy right and license from file? */
+const LICENSE_FROM_FILE = false;
+const COPYR_FROM_FILE = false;
+
+/* use IPSO/LWM2M (true) or ODM default (false) namespace */
+const USE_LWM2M_NS = false;
 
 const PORT = process.env.PORT || 8083;
 
@@ -35,6 +49,28 @@ if (process.argv.length == 3) { /* file as command line parameter */
       console.log("Can't convert. " + err);
     }
     });
+}
+
+if (process.argv.length > 3) { /* set of files as parameter */
+ process.argv.slice(2).forEach (inFile => {
+  fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
+    try {
+      let odm = createOdm(data);
+      let objname = Object.getOwnPropertyNames(odm.odmObject)[0].
+        toLocaleLowerCase();
+      let outFile = ODM_FILE_PREFIX + objname + ODM_FILE_SUFFIX;
+      debug("Outfile: " + outFile);
+      fs.writeFile(outFile, JSON.stringify(odm, null, 2), err => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+    } catch (err) {
+      console.log("Can't convert. " + err);
+    }
+    });
+  });
 }
 
 app.post('/ipso2odm', (req, res) => {
@@ -72,6 +108,8 @@ function createOdm(data) {
   let obj = doc.childNamed("Object");
   let odmObj = {};
   let objName = obj.childNamed("Name").val;
+  /* use underscores for spaces in JSON names */
+  let objJSONName = objName.replace(NAMEFIX_RE, NAMEFIX_CHAR);
   let odmProplist;
   let copyRight = DEF_COPYRIGHT;
   let license = DEF_LICENSE;
@@ -80,8 +118,12 @@ function createOdm(data) {
   let copyStart = data.indexOf("\nCopyright");
   let copyEnd = data.indexOf('\n', copyStart + 1);
   if (copyStart > 1) { /* Found copyright line */
-    copyRight = data.substring(copyStart, copyEnd).trim();
-    license = data.substring(copyEnd, data.indexOf("-->")).trim();
+    if (COPYR_FROM_FILE) {
+      copyRight = data.substring(copyStart, copyEnd).trim();
+    }
+    if (LICENSE_FROM_FILE) {
+      license = data.substring(copyEnd, data.indexOf("-->")).trim();
+    }
   }
 
   odm.info = {
@@ -92,22 +134,23 @@ function createOdm(data) {
     "license": license
   }
 
-  odm.namespace = {};
-  odm.namespace[LWM2M_NS_PREFIX] = LWM2M_ODM_NS;
-  odm.defaultNamespace = LWM2M_NS_PREFIX;
+  if (USE_LWM2M_NS) {
+    odm.namespace = {};
+    odm.namespace[LWM2M_NS_PREFIX] = LWM2M_ODM_NS;
+    odm.defaultNamespace = LWM2M_NS_PREFIX;
+  }
 
-  odmObj[objName] = {
-    "id" : JSON.parse(obj.childNamed("ObjectID").val),
-    "name" : obj.childNamed("Name").val,
-    "description" : obj.childNamed("Description1").val,
+  odmObj[objJSONName] = {
+    "name" : objName,
+    "description" : obj.childNamed("Description1").val.trim(),
     "odmProperty" : {}
   };
 
   odm.odmObject = odmObj;
 
-  odmProplist = odmObj[objName].odmProperty = {};
-  odmActlist = odmObj[objName].odmAction = {};
-  reqList = odmObj[objName].required = [];
+  odmProplist = odmObj[objJSONName].odmProperty = {};
+  odmActlist = odmObj[objJSONName].odmAction = {};
+  reqList = odmObj[objJSONName].odmRequired = [];
 
   obj.childNamed("Resources").children.forEach(res => {
     if (res.type === "text") {
@@ -115,22 +158,28 @@ function createOdm(data) {
     }
 
     let name = res.childNamed("Name").val;
+    let JSONName = name.replace(NAMEFIX_RE, NAMEFIX_CHAR);
     let isAction = res.childNamed("Operations").val.includes("E");
     let list = isAction ? odmActlist : odmProplist;
 
-    let odmItem = list[name] = {
+    let odmItem = list[JSONName] = {
       "name": name,
-      "id": JSON.parse(res.attr.ID),
-      "description": res.childNamed("Description").val,
+      "description": res.childNamed("Description").val.trim(),
     }
 
     if (!isOptional(res)) {
-      reqList.push(name);
+      reqList.push(isAction ? "0/odmAction/" : "0/odmProperty/" +
+        JSONName);
     }
 
     if (!isAction) {
-      odmItem.readOnly = isReadOnly(res);
-      odmItem.observable = DEF_IS_OBSERVABLE
+      let opers = res.childNamed("Operations").val;
+      if (!opers.includes("R")) {
+        odmItem.readable = false;
+      }
+      if (!opers.includes("W")) {
+        odmItem.writeable = false;
+      }
       addResourceType(odmItem, res);
       addResourceDetails(odmItem, res);
     }
@@ -148,18 +197,6 @@ function isOptional(lwm2mElement) {
   return lwm2mElement.childNamed("Mandatory").
     val.toLowerCase().trim() === "optional";
 }
-
-
-/**
- * Returns true if the given LwM2M schema 'Operations' element contains
- * value 'R' but no value 'W'
- * @param {XmlElement} lwm2mElement The LwM2M schema element
- */
-function isReadOnly(lwm2mElement) {
-  let opers = lwm2mElement.childNamed("Operations").val;
-  return opers.includes("R") && !opers.includes("W");
-}
-
 
 /**
  * Adds "type" and/or "subtype" ODM element(s) to the given ODM 

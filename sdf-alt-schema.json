@@ -43,19 +43,15 @@
     "objectprops": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id"],
+      "required": [],
       "properties": {
         "description": {
           "type": "string"
         },
-        "id": {
-              "type": "integer",
-              "minimum": 0
-        },
         "name": {
           "type": "string"
         },
-        "required": {
+        "odmRequired": {
           "type": "array",
           "items": {
             "type": "string"
@@ -84,19 +80,18 @@
     "resprops": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id"],
+      "required": [],
       "properties": {
         "description": {
           "type": "string"
         },
-        "id": {
-              "type": "integer",
-              "minimum": 0
-        },
         "name": {
           "type": "string"
         },
-        "readOnly": {
+        "readable": {
+          "type": "boolean"
+        },
+        "writeable": {
           "type": "boolean"
         },
         "observable": {

@@ -10,11 +10,17 @@ Automated translation of [IPSO/LwM2M models](http://www.openmobilealliance.org/w
 
 ## Usage
 
-`node ipso2odm [file-name]`
+`node ipso2odm [file-name(s)]`
 
-## Example
+When only a single file name is given, the resulting SDF is printed to the screen (stdout).
+
+When multiple file names are given, the output of each conversion is saved to `odmobject-object_name-sdf.json` file where `object_name` is the object name from each schema file.
+
+## Examples
 
 `node ipso2odm samples/load.xml`
+
+`node ipso2odm samples/*.xml`
 
 ## Web service mode
 
