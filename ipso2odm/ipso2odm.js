@@ -5,9 +5,6 @@
 
 const fs = require('fs');
 const xmldoc = require('xmldoc');
-const app = require('express')();
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
@@ -34,67 +31,41 @@ const COPYR_FROM_FILE = false;
 /* use IPSO/LWM2M (true) or ODM default (false) namespace */
 const USE_LWM2M_NS = false;
 
-const PORT = process.env.PORT || 8083;
+exports.createOdm = createOdm;
 
-app.use(helmet());
-app.use(bodyParser.raw({type: '*/*'}));
-
-if (process.argv.length == 3) { /* file as command line parameter */
-  var inFile = process.argv[2];
-  fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
-    try {
-      let odm = createOdm(data);
-      console.log(JSON.stringify(odm, null, 2));
-    } catch (err) {
-      console.log("Can't convert. " + err);
-    }
+if (require.main === module) { /* run as stand-alone? */
+  if (process.argv.length == 3) { /* file as command line parameter */
+    var inFile = process.argv[2];
+    fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
+      try {
+        let odm = createOdm(data);
+        console.log(JSON.stringify(odm, null, 2));
+      } catch (err) {
+        console.log("Can't convert. " + err);
+      }
     });
-}
-
-if (process.argv.length > 3) { /* set of files as parameter */
- process.argv.slice(2).forEach (inFile => {
-  fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
-    try {
-      let odm = createOdm(data);
-      let objname = Object.getOwnPropertyNames(odm.odmObject)[0].
-        toLocaleLowerCase();
-      let outFile = ODM_FILE_PREFIX + objname + ODM_FILE_SUFFIX;
-      debug("Outfile: " + outFile);
-      fs.writeFile(outFile, JSON.stringify(odm, null, 2), err => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-      });
-    } catch (err) {
-      console.log("Can't convert. " + err);
-    }
-    });
-  });
-}
-
-app.post('/ipso2odm', (req, res) => {
-  debug("Request from: " + req.ip);
-  try {
-    let odm = createOdm(req.body.toString().trim());
-    let json = JSON.stringify(odm, null, 2);
-    debug("Converted info title: %s", odm.info.title);
-    res.set('Content-Type', 'application/json')
-    res.send(json);
-  } catch(err) {
-    debug(err);
-    res.status(400).send("Can't convert. " + err);
   }
-});
-
-app.get('/', (req, res) => {
-    res.send("ipso2odm web service: POST LwM2M schema file to /ipso2odm");
-});
-
-if (process.argv.length == 2) { /* no command line params */
-  app.listen(PORT, () => {
-    console.log(`Starting web service on port ${PORT}`);
-  });
+  else if (process.argv.length > 3) { /* set of files as parameter */
+  process.argv.slice(2).forEach (inFile => {
+    fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
+      try {
+        let odm = createOdm(data);
+        let objname = Object.getOwnPropertyNames(odm.odmObject)[0].
+          toLocaleLowerCase();
+        let outFile = ODM_FILE_PREFIX + objname + ODM_FILE_SUFFIX;
+        debug("Outfile: " + outFile);
+        fs.writeFile(outFile, JSON.stringify(odm, null, 2), err => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
+      } catch (err) {
+        console.log("Can't convert. " + err);
+      }
+      });
+    });
+  }
 }
 
 /**
@@ -273,8 +244,8 @@ function addResourceDetails(odmProp, lwm2mElement) {
   if (lwRange) {
     if (lwRange.includes("..")) {
       let limits = lwRange.split("..");
-      odmProp.minimum = limits[0];
-      odmProp.maximum = limits[1];
+      odmProp.minimum = JSON.parse(limits[0]);
+      odmProp.maximum = JSON.parse(limits[1]);
     }
     /* TODO: handle other range types */
   }
