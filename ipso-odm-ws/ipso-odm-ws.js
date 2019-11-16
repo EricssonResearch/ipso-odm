@@ -30,10 +30,14 @@ app.use(function(req, res, next) { /* allow CORS */
 });
 
 
+
 app.post('/ipso2odm', (req, res) => {
   debug("Request from: " + req.ip);
+  debug("Copyright parameter: " +  req.query.copyright);
+  debug("License parameter: " + req.query.license);
   try {
-    let odm = ipso2odm.createOdm(req.body.toString().trim());
+    let odm = ipso2odm.createOdm(req.body.toString().trim(),
+      JSON.parse(req.query.copyright), JSON.parse(req.query.license));
     let json = JSON.stringify(odm, null, 2);
     debug("Converted info title: %s", odm.info.title);
     res.set('Content-Type', 'application/json');
@@ -43,7 +47,6 @@ app.post('/ipso2odm', (req, res) => {
     res.status(400).send("Can't convert. " + err);
   }
 });
-
 
 app.post('/odmlint', (req, res) => {
   debug("Request from: " + req.ip);
@@ -57,7 +60,6 @@ app.post('/odmlint', (req, res) => {
     res.status(400).send("Can't run linter. " + err);
   }
 });
-
 
 app.get('/', (req, res) => {
   res.set('Content-Type', 'text/html');

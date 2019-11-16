@@ -24,10 +24,6 @@ const DEF_COPYRIGHT = "Copyright (c) 2018, 2019 IPSO";
 const DEF_LICENSE =
   "https://github.com/one-data-model/oneDM/blob/master/LICENSE";
 
-/* try to read copy right and license from file? */
-const LICENSE_FROM_FILE = false;
-const COPYR_FROM_FILE = false;
-
 /* use IPSO/LWM2M (true) or ODM default (false) namespace */
 const USE_LWM2M_NS = false;
 
@@ -73,7 +69,7 @@ if (require.main === module) { /* run as stand-alone? */
  * @param data The LwM2M object schema document as UTF-8
  * @returns ODM document as JSON object
  */
-function createOdm(data) {
+function createOdm(data, copyrFromFile, licenseFromFile) {
   let doc = new xmldoc.XmlDocument(data);
   let odm = {};
   let obj = doc.childNamed("Object");
@@ -89,10 +85,11 @@ function createOdm(data) {
   let copyStart = data.indexOf("\nCopyright");
   let copyEnd = data.indexOf('\n', copyStart + 1);
   if (copyStart > 1) { /* Found copyright line */
-    if (COPYR_FROM_FILE) {
+    /* try to read copy right and license from file? */
+    if (copyrFromFile) {
       copyRight = data.substring(copyStart, copyEnd).trim();
     }
-    if (LICENSE_FROM_FILE) {
+    if (licenseFromFile) {
       license = data.substring(copyEnd, data.indexOf("-->")).trim();
     }
   }
