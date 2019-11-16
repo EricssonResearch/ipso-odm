@@ -6,6 +6,8 @@
 const fs = require('fs');
 const ajv = require('ajv')();
 
+const RET_VAL_ERROR = 255;
+
 const LINT_STATUS = {
   OK: 0,
   FAIL_SCHEMA: -1
@@ -30,9 +32,11 @@ if (require.main === module) { /* run as stand-alone? */
       res = odmLint(odmFile, schema);
     } catch (err) {
       console.log(err.message);
+      process.exit(RET_VAL_ERROR);
     }
 
     console.dir(res);
+    process.exit(res.result);
   }
   else {
     console.log("Usage: node odmlint odmfile.json [schemafile.json]");
