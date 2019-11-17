@@ -124,7 +124,7 @@
         "maximum": {
           "type:": "number"
         },
-        "unit": {
+        "units": {
           "type" : "string"
         },
         "items": {

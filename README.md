@@ -31,10 +31,12 @@ Usage: `node odmlint odmfile.json [schemafile.json]`
 Example: `node odmlint samples/bitmap.json`
 
 The output is a JSON object with two fields:
-* result: integer value describing the result of the lint process (0 if there are no errors, -1 if schema check failed)
-* errors: array of values with more details on errors (if any)
+* errorCount: number of checks that failed (or 0 if all checks passed)
+* errors: object with field for each type of error encountered
+  * fileName: errors on input filename
+  * schema: array of values with more details on schema errors
 
-If the given ODM SDF file doesn't match the schema, errors are described as defined here: https://github.com/epoberezkin/ajv#error-objects
+For schema errors, the error messages are described in more detail here: https://github.com/epoberezkin/ajv#error-objects
 
 ## IPSO ID mapper
 
