@@ -23,8 +23,10 @@ if (require.main === module) { /* run as stand-alone? */
     let schema;
     let odmFile;
     let inFile = process.argv[2];
+    let appDir = path.dirname(require.main.filename);
+
     let schemaFile = process.argv.length > 3 ?
-     process.argv[3] : DEF_SCHEMA_FILE;
+     process.argv[3] : (appDir + "/../" + DEF_SCHEMA_FILE);
 
     fileNameCheck(inFile, res);
 
@@ -36,7 +38,7 @@ if (require.main === module) { /* run as stand-alone? */
       odmLint(odmFile, schema, res);
     } catch (err) {
       console.log(err.message);
-      process.exit(RET_VAL_ERROR);
+      process.exit(-1);
     }
 
     console.dir(res, {depth: null});
