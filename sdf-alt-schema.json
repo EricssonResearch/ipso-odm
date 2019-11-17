@@ -124,6 +124,12 @@
         "maximum": {
           "type:": "number"
         },
+        "minItems": {
+          "type": "number"
+        },
+        "maxItems": {
+          "type": "number"
+        },
         "units": {
           "type" : "string"
         },
