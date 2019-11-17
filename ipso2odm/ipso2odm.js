@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "20191025";
+const VERSION = "20191116";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
