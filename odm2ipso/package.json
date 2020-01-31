@@ -1,12 +1,12 @@
 {
-  "name": "ipso-odm",
+  "name": "odm2ipso",
   "version": "0.1.0",
-  "description": "Tools for OneDM SDF / IPSO model conversions",
+  "description": "One Data Model SDF to IPSO converter",
+  "main": "odm2ipso.js",
   "dependencies": {
-    "ipso2odm": "file:ipso2odm",
-    "odm2ipso": "file:odm2ipso",
-    "odmlint": "file:odmlint",
-    "npm": ">=6.13.4"
+    "debug": "^4.1.1",
+    "xml-formatter": "^1.2.0",
+    "jstoxml": "^1.6.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -16,6 +16,6 @@
     "type": "git",
     "url": "https://github.com/EricssonResearch/ipso-odm.git"
   },
-  "author": "Ari Keränen",
+  "author": "Niklas Widell",
   "license": "BSD-3-Clause"
 }

@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const debug = require('debug')('ipso-odm-ws');
 
 const ipso2odm = require('../ipso2odm');
+const odm2ipso = require('../odm2ipso');
 const odmlint = require('../odmlint');
 const INDEX_HTML = `
   <html><body>
@@ -60,6 +61,21 @@ app.post('/odmlint', (req, res) => {
     res.status(400).send("Can't run linter. " + err);
   }
 });
+
+
+app.post('/odm2ipso', (req, res) => {
+  debug("Request from: " + req.ip);
+  try {
+      let ipso = odm2ipso.getFormattedXml(JSON.parse(req.body));
+      res.set('Content-Type', 'text/xml');
+      res.send(ipso);
+  } catch(err) {
+    debug(err);
+    res.status(400).send("Can't convert. " + err+"\n");
+  }
+}
+);
+
 
 app.get('/', (req, res) => {
   res.set('Content-Type', 'text/html');

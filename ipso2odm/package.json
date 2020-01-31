@@ -5,9 +5,6 @@
   "main": "ipso2odm.js",
   "dependencies": {
     "debug": "^4.1.1",
-    "express": "^4.17.1",
-    "helmet": "^3.18.0",
-    "npm": "^6.9.2",
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {},
