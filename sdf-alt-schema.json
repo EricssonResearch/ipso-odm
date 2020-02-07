@@ -167,7 +167,7 @@
             "relative-json-pointer",
             "regex"
           ]
-        },
+        }
       }
     }
   }
