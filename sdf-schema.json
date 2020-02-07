@@ -92,35 +92,14 @@
   },
 
   "definitions": {
-    "jsonpointer": {
-      "oneOf": [
-        {
+    "sdf-pointer": {
           "type": "string",
-          "format": "json-pointer"
-        },
-        {
-          "type": "string",
-          "format": "relative-json-pointer"
-        }
-      ]
-    },
-    "pointer-ref": {
-      "type": "object",
-      "properties": {
-        "$ref": { "$ref": "#/definitions/jsonpointer" }
-      }
-    },
-    "pointer-ref-list": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/pointer-ref"
-      },
-      "minitems": 1
+          "format": "uri-reference"
     },
     "pointer-list": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/jsonpointer"
+        "$ref": "#/definitions/sdf-pointer"
       }
     },
     "commonqualities": {
@@ -139,7 +118,7 @@
           "type": "string"
         },
         "odmRef": {
-          "$ref": "#/definitions/jsonpointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "odmType": {
           "type": "object",
@@ -328,7 +307,7 @@
           "type": "string"
         },
         "$ref": {
-          "$ref": "#/definitions/jsonpointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "type": {
           "type": "string",
@@ -343,13 +322,7 @@
         },
         "enum": {
           "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "number"
-            },
-            "minitems": 1
-          }
+          "minItems": 1
         },
         "const": {
           "oneOf": [
@@ -380,14 +353,18 @@
             "date-time",
             "date",
             "time",
+            "duration",
             "email",
             "idn-email",
             "hostname",
             "idn-hostname",
+            "ipv4",
+            "ipv6",
             "uri",
             "uri-reference",
             "iri",
             "iri-reference",
+            "uuid",
             "uri-template",
             "json-pointer",
             "relative-json-pointer",
