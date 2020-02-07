@@ -7,7 +7,7 @@ const fs = require('fs');
 const ajv = require('ajv')();
 const path = require('path');
 
-const FILENAME_RE = '^odm(object|thing|data)-[a-z_.-]*\.sdf\.json$';
+const FILENAME_RE = '^odm(object|thing|data)-[a-z0-9_.-]*\.sdf\.json$';
 
 const DEF_SCHEMA_FILE = 'sdf-alt-schema.json';
 
