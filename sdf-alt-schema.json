@@ -1,5 +1,5 @@
 {
-  "title": "Alternative ODM SDF schema (work in progress 20190721)",
+  "title": "Alternative ODM SDF schema (work in progress 20200213)",
   "type": "object",
   "additionalProperties": false,
   "required": ["info"],
@@ -37,6 +37,39 @@
       "additionalProperties": {
         "$ref": "#/definitions/objectprops"
       }
+    },
+    "odmThing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties" : {
+        "odmObject": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/objectprops"
+          }
+        },
+        "odmThing" : {
+          "type" : "object"
+        }
+      }
+    },
+    "odmProperty": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/resprops"
+      }
+    },
+    "odmAction": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/resprops"
+      }
+    },
+    "odmEvent": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/resprops"
+      }
     }
   },
   "definitions": {
@@ -54,7 +87,7 @@
         "odmRequired": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/sdf-pointer"
           }
         },
         "odmProperty": {
@@ -115,8 +148,35 @@
             "bytestring"
           ]
         },
+        "enum": {
+          "type": "array",
+          "minItems": 1
+        },
+        "const": {
+          "oneOf": [
+            { "type": "number"},
+            { "type": "string"},
+            { "type": "boolean"},
+            { "type": "array"},
+            { "type": "object"},
+            { "type": "null"}
+          ]
+        },
+        "default": {
+          "oneOf": [
+            { "type": "number"},
+            { "type": "string"},
+            { "type": "boolean"},
+            { "type": "array"},
+            { "type": "object"},
+            { "type": "null"}
+          ]
+        },
         "$comment": {
           "type": "string"
+        },
+        "odmRef": {
+          "$ref": "#/definitions/sdf-pointer"
         },
         "minimum": {
           "type": "number"
@@ -128,6 +188,12 @@
           "type": "number"
         },
         "maxItems": {
+          "type": "number"
+        },
+        "minLength": {
+          "type": "number"
+        },
+        "maxLength": {
           "type": "number"
         },
         "units": {
@@ -169,6 +235,10 @@
           ]
         }
       }
+    },
+    "sdf-pointer": {
+      "type": "string",
+      "format": "uri-reference"
     }
   }
 }
