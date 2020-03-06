@@ -4,10 +4,18 @@
  */
 
 const fs = require('fs');
-const ajv = require('ajv')();
+const Ajv = require('ajv');
 const path = require('path');
 
+const AJV_OPTIONS = {
+  "allErrors": true,
+  "format": "full"
+}
+
+/* Regular expression for valid SDF file names */
 const FILENAME_RE = '^odm(object|thing|data)-[a-z0-9_.-]*\.sdf\.json$';
+/* Regular expression for valid characters in SDF file */
+const VALID_CHARS_RE = '[^\x00-\x7F]';
 
 const DEF_SCHEMA_FILE = 'sdf-alt-schema.json';
 
@@ -50,6 +58,7 @@ if (require.main === module) { /* run as stand-alone? */
   }
 }
 
+
 function fileNameCheck(fileName, res) {
   let fileNameRe = new RegExp(FILENAME_RE);
   let baseFileName = path.parse(fileName).base;
@@ -62,7 +71,22 @@ function fileNameCheck(fileName, res) {
 }
 
 
+function validCharsCheck(odmFile, res) {
+  let odmStr = JSON.stringify(odmFile);
+  let invalidLoc = odmStr.search(new RegExp(VALID_CHARS_RE));
+  if (invalidLoc != -1) {
+    res.errorCount++;
+    res.errors.validChars = "File contains unexpected character:" +
+      odmStr.charAt(invalidLoc);
+  }
+}
+
+
 function odmLint(odmFile, schema, res) {
+  let ajv = new Ajv(AJV_OPTIONS);
+
+  validCharsCheck(odmFile, res);
+
   if (! schema) {
     schema = JSON.parse(fs.readFileSync(
       DEF_SCHEMA_FILE, { encoding: 'utf-8' }));
