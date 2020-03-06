@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "20191116";
+const VERSION = "20200306";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
@@ -20,9 +20,13 @@ const NAMEFIX_RE = new RegExp('[\\s,\\/]', "g");
 const NAMEFIX_CHAR = "_";
 
 /* default values if can't parse from input file */
-const DEF_COPYRIGHT = "Copyright (c) 2018, 2019 IPSO";
+const DEF_COPYRIGHT = "Copyright (c) 2018-2020 IPSO";
 const DEF_LICENSE =
   "https://github.com/one-data-model/oneDM/blob/master/LICENSE";
+
+/* range of LwM2M/IPSO re-usable resource IDs */
+const RE_RES_MIN = 2048
+const RE_RES_MAX = 26240
 
 /* use IPSO/LWM2M (true) or ODM default (false) namespace */
 const USE_LWM2M_NS = false;
@@ -72,12 +76,11 @@ if (require.main === module) { /* run as stand-alone? */
 function createOdm(data, copyrFromFile, licenseFromFile) {
   let doc = new xmldoc.XmlDocument(data);
   let odm = {};
-  let obj = doc.childNamed("Object");
+  let xmlObj = doc.childNamed("Object");
   let odmObj = {};
-  let objName = obj.childNamed("Name").val;
+  let objName = xmlObj.childNamed("Name").val;
   /* use underscores for spaces in JSON names */
   let objJSONName = objName.replace(NAMEFIX_RE, NAMEFIX_CHAR);
-  let odmProplist;
   let copyRight = DEF_COPYRIGHT;
   let license = DEF_LICENSE;
 
@@ -95,8 +98,8 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
   }
 
   odm.info = {
-    "title":  TITLE_PREFIX + " " + obj.childNamed("Name").val +
-      " (Object ID " + obj.childNamed("ObjectID").val + ")" ,
+    "title":  TITLE_PREFIX + " " + xmlObj.childNamed("Name").val +
+      " (Object ID " + xmlObj.childNamed("ObjectID").val + ")" ,
     "version": VERSION,
     "copyright": copyRight,
     "license": license
@@ -110,17 +113,32 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
 
   odmObj[objJSONName] = {
     "name" : objName,
-    "description" : obj.childNamed("Description1").val.trim(),
-    "odmProperty" : {}
+    "description" : xmlObj.childNamed("Description1").val.trim(),
   };
 
   odm.odmObject = odmObj;
 
-  odmProplist = odmObj[objJSONName].odmProperty = {};
-  odmActlist = odmObj[objJSONName].odmAction = {};
-  reqList = odmObj[objJSONName].odmRequired = [];
+  addResources(xmlObj, odm, objJSONName);
 
-  obj.childNamed("Resources").children.forEach(res => {
+  return odm;
+};
+
+/**
+ * Adds resources from the XML objec to the SDF object
+ * @param xmlObj The LwM2M XML object where to get resource info
+ * @param odm The ODM SDF document where to store resource info
+ * @param objJSONName The JSON formatted name of the object
+ */
+function addResources(xmlObj, odm, objJSONName) {
+  let sdfObj = odm.odmObject[objJSONName];
+
+  let objProplist = sdfObj.odmProperty = {};
+  let objActlist = sdfObj.odmAction = {};
+  let odmProplist = odm.odmProperty = {};
+  let odmActlist = odm.odmAction = {};
+  let reqList = sdfObj.odmRequired = [];
+
+  xmlObj.childNamed("Resources").children.forEach(res => {
     if (res.type === "text") {
       return;
     }
@@ -128,7 +146,17 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
     let name = res.childNamed("Name").val;
     let JSONName = name.replace(NAMEFIX_RE, NAMEFIX_CHAR);
     let isAction = res.childNamed("Operations").val.includes("E");
-    let list = isAction ? odmActlist : odmProplist;
+    let list = isAction ? objActlist : objProplist;
+
+    if (res.attr.ID >= RE_RES_MIN && res.attr.ID <= RE_RES_MAX) {
+      /* for re-usable resources add pointer and further details to
+        the top-level props/actions */
+      list[JSONName] = {
+        "odmRef" : (isAction ? "#/odmAction/" : "#/odmProperty/") +
+          JSONName
+      }
+      list = isAction ? odmActlist : odmProplist;
+    }
 
     let odmItem = list[JSONName] = {
       "name": name,
@@ -136,7 +164,7 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
     }
 
     if (!isOptional(res)) {
-      reqList.push(isAction ? "0/odmAction/" : "0/odmProperty/" +
+      reqList.push(isAction ? "#/odmAction/" : "#/odmProperty/" +
         JSONName);
     }
 
@@ -152,9 +180,8 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
       addResourceDetails(odmItem, res);
     }
   });
+}
 
-  return odm;
-};
 
 /**
  * Returns true if the given LwM2M schema element has a child element
