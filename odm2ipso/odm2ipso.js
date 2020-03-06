@@ -113,8 +113,8 @@ function translateResources(odm, objName) {
         "Name": res.replace(NAMEFIX_RE, NAMEFIX_CHAR)
       };
 
-      if ('writeable' in sdfresource) {
-        ipsoproperty.Operations = (sdfresource.writeable) ?
+      if ('writable' in sdfresource) {
+        ipsoproperty.Operations = (sdfresource.writable) ?
          ("RW") : ("R");
       } else if (capability === 'odmAction') {
         ipsoproperty.Operations = "E";

@@ -174,7 +174,7 @@ function addResources(xmlObj, odm, objJSONName) {
         odmItem.readable = false;
       }
       if (!opers.includes("W")) {
-        odmItem.writeable = false;
+        odmItem.writable = false;
       }
       addResourceType(odmItem, res);
       addResourceDetails(odmItem, res);

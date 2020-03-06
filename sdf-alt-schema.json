@@ -1,5 +1,5 @@
 {
-  "title": "Alternative ODM SDF schema (work in progress 20200213)",
+  "title": "Alternative ODM SDF schema (work in progress 20200304)",
   "type": "object",
   "additionalProperties": false,
   "required": ["info"],
@@ -124,7 +124,7 @@
         "readable": {
           "type": "boolean"
         },
-        "writeable": {
+        "writable": {
           "type": "boolean"
         },
         "observable": {

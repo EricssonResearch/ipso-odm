@@ -13,37 +13,37 @@
         "Sensor_Value": {
           "name": "Sensor Value",
           "description": "Last or Current Measured Value from the Sensor",
-          "writeable": false,
+          "writable": false,
           "type": "number"
         },
         "Sensor_Units": {
           "name": "Sensor Units",
           "description": "Measurement Units Definition e.g. “Cel” for Temperature in Celsius",
-          "writeable": false,
+          "writable": false,
           "type": "string"
         },
         "Min_Measured_Value": {
           "name": "Min Measured Value",
           "description": "The minimum value measured by the sensor since power ON or reset",
-          "writeable": false,
+          "writable": false,
           "type": "number"
         },
         "Max_Measured_Value": {
           "name": "Max Measured Value",
           "description": "The maximum value measured by the sensor since power ON or reset",
-          "writeable": false,
+          "writable": false,
           "type": "number"
         },
         "Min_Range_Value": {
           "name": "Min Range Value",
           "description": "The minimum value that can be measured by the sensor",
-          "writeable": false,
+          "writable": false,
           "type": "number"
         },
         "Max_Range_Value": {
           "name": "Max Range Value",
           "description": "The maximum value that can be measured by the sensor",
-          "writeable": false,
+          "writable": false,
           "type": "number"
         },
         "Current_Calibration": {
