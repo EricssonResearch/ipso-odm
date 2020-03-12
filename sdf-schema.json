@@ -47,13 +47,6 @@
         "$ref": "#/definitions/productqualities"
       }
     },
-    "odmView": {
-      "description": "odmView uses include to define a list of instances in the deployed model to include by reference",
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/viewqualities"
-     }
-    },
     "odmObject": {
       "description": "Object is a set of Properties, Actions, and Events that together perform a particular function",
       "type": "object",
@@ -129,9 +122,6 @@
           "additionalProperties": false        
           }
         },
-        "odmComponent": {
-          "$ref": "#/definitions/pointer-list"
-        },
         "odmRequired": {
           "$ref": "#/definitions/pointer-list"
         }
@@ -148,8 +138,7 @@
           "type": "object",
           "properties": {
             "odmObject": {"$ref": "#/properties/odmObject"},
-            "odmThing": {"$ref": "#/properties/odmThing"},
-            "odmView": {"$ref": "#/properties/odmView"}
+            "odmThing": {"$ref": "#/properties/odmThing"}
           }
         }
       ]
@@ -163,25 +152,6 @@
         {
           "type": "object",
           "properties": {
-            "odmObject": {"$ref": "#/properties/odmObject"},
-            "odmThing": {"$ref": "#/properties/odmThing"},
-            "odmView": {"$ref": "#/properties/odmView"}
-          }
-        }
-      ]
-    },
-
-    "viewqualities": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/commonqualities"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "isDefaultView": {
-              "type": "boolean"
-            },
             "odmObject": {"$ref": "#/properties/odmObject"},
             "odmThing": {"$ref": "#/properties/odmThing"}
           }
@@ -377,6 +347,12 @@
         "maximum": {
           "type": "number"
         },
+        "exclusiveMinimum": {
+          "type": "boolean"
+        },
+        "exclusiveMaximum": {
+          "type": "boolean"
+        },
         "multipleOf": {
           "type": "number"
         },
@@ -423,6 +399,9 @@
         },
         "maxItems": {
           "type": "number"
+        },
+        "uniqueItems": {
+          "type": "boolean"
         },
         "properties": {
           "type": "object"

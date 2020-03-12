@@ -184,6 +184,12 @@
         "maximum": {
           "type:": "number"
         },
+        "exclusiveMinimum": {
+          "type": "boolean"
+        },
+        "exclusiveMaximum": {
+          "type": "boolean"
+        },
         "minItems": {
           "type": "number"
         },
@@ -195,6 +201,9 @@
         },
         "maxLength": {
           "type": "number"
+        },
+        "uniqueItems": {
+          "type": "boolean"
         },
         "units": {
           "type" : "string"
