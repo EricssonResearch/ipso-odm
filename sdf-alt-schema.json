@@ -49,7 +49,7 @@
           }
         },
         "odmThing" : {
-          "type" : "object"
+          "$ref": "#/properties/odmThing"
         }
       }
     },
@@ -182,7 +182,7 @@
           "type": "number"
         },
         "maximum": {
-          "type:": "number"
+          "type": "number"
         },
         "exclusiveMinimum": {
           "type": "boolean"
@@ -191,16 +191,16 @@
           "type": "boolean"
         },
         "minItems": {
-          "type": "number"
+          "type": "integer"
         },
         "maxItems": {
-          "type": "number"
+          "type": "integer"
         },
         "minLength": {
-          "type": "number"
+          "type": "integer"
         },
         "maxLength": {
-          "type": "number"
+          "type": "integer"
         },
         "uniqueItems": {
           "type": "boolean"
