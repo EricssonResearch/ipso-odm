@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "20200306";
+const VERSION = "20200528";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
@@ -112,7 +112,7 @@ function createOdm(data, copyrFromFile, licenseFromFile) {
   }
 
   odmObj[objJSONName] = {
-    "name" : objName,
+    "label" : objName,
     "description" : xmlObj.childNamed("Description1").val.trim(),
   };
 
@@ -159,7 +159,7 @@ function addResources(xmlObj, odm, objJSONName) {
     }
 
     let odmItem = list[JSONName] = {
-      "name": name,
+      "label": name,
       "description": res.childNamed("Description").val.trim(),
     }
 

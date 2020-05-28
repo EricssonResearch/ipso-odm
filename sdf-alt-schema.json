@@ -81,7 +81,7 @@
         "description": {
           "type": "string"
         },
-        "name": {
+        "label": {
           "type": "string"
         },
         "odmRequired": {
@@ -118,7 +118,7 @@
         "description": {
           "type": "string"
         },
-        "name": {
+        "label": {
           "type": "string"
         },
         "readable": {

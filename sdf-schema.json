@@ -107,7 +107,7 @@
         "title": {
           "type": "string"
         },
-        "name": {
+        "label": {
           "type": "string"
         },
         "odmRef": {
