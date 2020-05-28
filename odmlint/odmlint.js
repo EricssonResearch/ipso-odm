@@ -45,8 +45,8 @@ if (require.main === module) { /* run as stand-alone? */
         { encoding: 'utf-8' }));
       odmLint(odmFile, schema, res);
     } catch (err) {
-      console.log(err.message);
-      process.exit(-1);
+      res.errorCount = 1;
+      res.errors.parse = err.message;
     }
 
     console.dir(res, {depth: null});
