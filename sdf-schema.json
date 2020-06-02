@@ -33,49 +33,49 @@
       "type": "string"
     },
     
-    "odmThing": {
+    "sdfThing": {
       "description": "Thing is a composition of objects that work together in some way",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/thingqualities"
       }
     },
-    "odmProduct": {
+    "sdfProduct": {
       "description": "Product is a composition of things and objects that can model a SKU-level instance of a product",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/productqualities"
       }
     },
-    "odmObject": {
+    "sdfObject": {
       "description": "Object is a set of Properties, Actions, and Events that together perform a particular function",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/objectqualities"
       }
     },
-    "odmProperty": {
+    "sdfProperty": {
       "description": "Property represents the state of an instance of an object",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/propertyqualities"
       }
     },
-    "odmAction": {
+    "sdfAction": {
       "description": "Action is a directive to invoke an application layer verb associated with an object",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/actionqualities"
       }
     },
-    "odmEvent": {
+    "sdfEvent": {
       "description": "Event represents an occurence of something associated with an object",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/eventqualities"
       }
     },
-    "odmData": {
+    "sdfData": {
       "description": "Data represents a piece of information that can be the state of a property or a parameter to an action or a signal in an event",
       "type": "object",
       "additionalProperties": {
@@ -110,10 +110,10 @@
         "label": {
           "type": "string"
         },
-        "odmRef": {
+        "sdfRef": {
           "$ref": "#/definitions/sdf-pointer"
         },
-        "odmType": {
+        "sdfType": {
           "type": "object",
           "properties": {
             "$ref": {
@@ -122,7 +122,7 @@
           "additionalProperties": false        
           }
         },
-        "odmRequired": {
+        "sdfRequired": {
           "$ref": "#/definitions/pointer-list"
         }
       },
@@ -137,8 +137,8 @@
         {
           "type": "object",
           "properties": {
-            "odmObject": {"$ref": "#/properties/odmObject"},
-            "odmThing": {"$ref": "#/properties/odmThing"}
+            "sdfObject": {"$ref": "#/properties/sdfObject"},
+            "sdfThing": {"$ref": "#/properties/sdfThing"}
           }
         }
       ]
@@ -152,8 +152,8 @@
         {
           "type": "object",
           "properties": {
-            "odmObject": {"$ref": "#/properties/odmObject"},
-            "odmThing": {"$ref": "#/properties/odmThing"}
+            "sdfObject": {"$ref": "#/properties/sdfObject"},
+            "sdfThing": {"$ref": "#/properties/sdfThing"}
           }
         }
       ]
@@ -167,11 +167,11 @@
         {
           "type": "object",
           "properties": {
-            "odmObject": {"$ref": "#/properties/odmObject"},
-            "odmProperty": {"$ref": "#/properties/odmProperty"},
-            "odmAction": {"$ref": "#/properties/odmAction"},
-            "odmEvent": {"$ref": "#/properties/odmEvent"},
-            "odmData": {"$ref": "#/properties/odmData"}
+            "sdfObject": {"$ref": "#/properties/sdfObject"},
+            "sdfProperty": {"$ref": "#/properties/sdfProperty"},
+            "sdfAction": {"$ref": "#/properties/sdfAction"},
+            "sdfEvent": {"$ref": "#/properties/sdfEvent"},
+            "sdfData": {"$ref": "#/properties/sdfData"}
           }
         }
       ]
@@ -193,13 +193,13 @@
         {
           "type": "object",
           "properties": {
-            "odmInputData": {
+            "sdfInputData": {
               "$ref": "#/definitions/pointer-list"
             },
-            "odmRequiredInputData": {
+            "sdfRequiredInputData": {
               "$ref": "#/definitions/pointer-list"
             },
-            "odmOutputData": {
+            "sdfOutputData": {
               "$ref": "#/definitions/pointer-list"
             }          
           }
@@ -215,7 +215,7 @@
         {
           "type": "object",
           "properties": {
-            "odmOutputData": {
+            "sdfOutputData": {
               "$ref": "#/definitions/pointer-list"
             }          
           }

@@ -1,5 +1,5 @@
 {
-  "title": "Alternative ODM SDF schema (work in progress 20200304)",
+  "title": "Alternative OneDM SDF schema (work in progress 20200602)",
   "type": "object",
   "additionalProperties": false,
   "required": ["info"],
@@ -32,40 +32,40 @@
     "defaultNamespace": {
       "type": "string"
     },
-    "odmObject": {
+    "sdfObject": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/objectprops"
       }
     },
-    "odmThing": {
+    "sdfThing": {
       "type": "object",
       "additionalProperties": false,
       "properties" : {
-        "odmObject": {
+        "sdfObject": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/objectprops"
           }
         },
-        "odmThing" : {
-          "$ref": "#/properties/odmThing"
+        "sdfThing" : {
+          "$ref": "#/properties/sdfThing"
         }
       }
     },
-    "odmProperty": {
+    "sdfProperty": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/resprops"
       }
     },
-    "odmAction": {
+    "sdfAction": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/resprops"
       }
     },
-    "odmEvent": {
+    "sdfEvent": {
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/resprops"
@@ -84,25 +84,25 @@
         "label": {
           "type": "string"
         },
-        "odmRequired": {
+        "sdfRequired": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/sdf-pointer"
           }
         },
-        "odmProperty": {
+        "sdfProperty": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/resprops"
           }
         },
-        "odmAction": {
+        "sdfAction": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/resprops"
           }
         },
-        "odmEvent": {
+        "sdfEvent": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/resprops"
@@ -175,7 +175,7 @@
         "$comment": {
           "type": "string"
         },
-        "odmRef": {
+        "sdfRef": {
           "$ref": "#/definitions/sdf-pointer"
         },
         "minimum": {
