@@ -13,7 +13,7 @@ const AJV_OPTIONS = {
 }
 
 /* Regular expression for valid SDF file names */
-const FILENAME_RE = '^odm(object|thing|data)-[a-z0-9_.-]*\.sdf\.json$';
+const FILENAME_RE = '^sdf(object|thing|data)-[a-z0-9_.-]*\.sdf\.json$';
 /* Regular expression for valid characters in SDF file */
 const VALID_CHARS_RE = '[^\x00-\x7F]';
 
