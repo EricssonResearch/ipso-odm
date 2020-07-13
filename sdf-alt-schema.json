@@ -1,5 +1,5 @@
 {
-  "title": "Alternative OneDM SDF schema (work in progress 20200602)",
+  "title": "Alternative OneDM SDF schema (work in progress 2020-06-04)",
   "type": "object",
   "additionalProperties": false,
   "required": ["info"],
@@ -144,8 +144,8 @@
         "subtype": {
           "type": "string",
           "enum": [
-            "unixtime",
-            "bytestring"
+            "unix-time",
+            "byte-string"
           ]
         },
         "enum": {

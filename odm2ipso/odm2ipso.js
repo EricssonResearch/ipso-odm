@@ -58,9 +58,9 @@ function getFormattedXml(odm) {
 }
 
 function translateODMObject(odm) {
-  let objname = Object.keys(odm.odmObject)[0];
+  let objname = Object.keys(odm.sdfObject)[0];
   let objid = DEFAULT_OBJ_ID;
-  let sdfobject = odm.odmObject[objname];
+  let sdfobject = odm.sdfObject[objname];
   let ipsoinfo = {};
 
   if (idmap.map && idmap.map["#/" + objname]) {
@@ -101,13 +101,13 @@ function translateODMObject(odm) {
 
 function translateResources(odm, objName) {
   let resources = [];
-  let sdfcapabilities = ["odmProperty", "odmAction"];
+  let sdfcapabilities = ["sdfProperty", "sdfAction"];
   let privateId = 1;
 
   for (cap in sdfcapabilities) {
     let capability = sdfcapabilities[cap];
-    for (res in odm.odmObject[objName][capability]) {
-      let sdfresource = odm.odmObject[objName][capability][res];
+    for (res in odm.sdfObject[objName][capability]) {
+      let sdfresource = odm.sdfObject[objName][capability][res];
       let propPointer = "#/" + objName + "/" + res;
       let ipsoproperty = {
         "Name": res.replace(NAMEFIX_RE, NAMEFIX_CHAR)
@@ -116,7 +116,7 @@ function translateResources(odm, objName) {
       if ('writable' in sdfresource) {
         ipsoproperty.Operations = (sdfresource.writable) ?
          ("RW") : ("R");
-      } else if (capability === 'odmAction') {
+      } else if (capability === 'sdfAction') {
         ipsoproperty.Operations = "E";
       } else {
         ipsoproperty.Operations = "RW";
@@ -125,8 +125,8 @@ function translateResources(odm, objName) {
         ipsoproperty.MultipleInstances = (sdfresource.type == 'array') ?
           ('Multiple') : ('Single');
       }
-      if ('odmRequired' in odm.odmObject[objName]) {
-        ipsoproperty.Mandatory = (odm.odmObject[objName].odmRequired.
+      if ('sdfRequired' in odm.sdfObject[objName]) {
+        ipsoproperty.Mandatory = (odm.sdfObject[objName].sdfRequired.
           includes("0/" + capability + "/" + res)) ?
           ('Mandatory') : ('Optional');
       }
@@ -166,10 +166,10 @@ function translateResources(odm, objName) {
   return resources;
 }
 
-function convertType(odmType, odmSubType, min) {
+function convertType(sdfType, sdfSubType, min) {
   let type;
 
-  switch (odmType) {
+  switch (sdfType) {
     case "string":
       type = "String";
       break;
@@ -188,12 +188,12 @@ function convertType(odmType, odmSubType, min) {
       break;
     default:
       /* type not (yet) supported */
-      type = "unknown (" + odmType + ")";
+      type = "unknown (" + sdfType + ")";
   }
 
-  if (odmSubType === "bytestring") {
+  if (sdfSubType === "byte-string") {
     type = "Opaque";
-  } else if (odmSubType === "unixtime") {
+  } else if (sdfSubType === "unix-time") {
     type = "Time";
   }
 
