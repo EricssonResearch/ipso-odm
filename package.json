@@ -6,7 +6,7 @@
     "ipso2odm": "file:ipso2odm",
     "odm2ipso": "file:odm2ipso",
     "odmlint": "file:odmlint",
-    "npm": ">=6.13.4"
+    "npm": ">=6.14.6"
   },
   "devDependencies": {},
   "scripts": {
