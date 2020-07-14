@@ -11,7 +11,7 @@ const { toXML } = require('jstoxml');
 const VERSION = "1.0";
 const OBJ_URN_BASE = 'urn:oma:lwm2m:ext:';
 const PREAMPLE_PREFIX =
-  '<?xml version="1.0" encoding="UTF-8"?>\n\n<!-- MIT License\n\n'
+  '<?xml version="1.0" encoding="UTF-8"?>\n<!--\n'
 const ID_MAP_FILE = "idmap.json";
 const DEFAULT_OBJ_ID = 65535;
 
@@ -49,8 +49,8 @@ if (require.main === module) { /* run as stand-alone? */
 
 function getFormattedXml(odm) {
   let ipsoinfo = translateODMObject(odm);
-  let preamble = PREAMPLE_PREFIX + odm.info.copyright + '\n\n' +
-    odm.info.license + ' -->\n';
+  let preamble = PREAMPLE_PREFIX + odm.info.copyright + '\n' +
+    odm.info.license + '\n-->\n';
   let ipsofile = preamble + xmlformatter(ipsoinfo,
     { collapseContent: true });
 
