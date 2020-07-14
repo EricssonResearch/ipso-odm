@@ -1,6 +1,6 @@
 # IPSO - OneDM data model translation toolkit
 
-Toolkit for automated translation between [IPSO/LwM2M models](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) and [One Data Model SDF](https://github.com/one-data-model/language/blob/master/sdf.md), and a linter for SDF files.
+Toolkit for automated translation between [IPSO/LwM2M models](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) and [One Data Model SDF](https://github.com/one-data-model/language/blob/master/sdf.md).
 
 ## Installing
 
@@ -28,21 +28,9 @@ Usage: `node odm2ipso [file-name]`
 
 Translates the given OneDM SDF file to a LwM2M schema file. The program also uses as input `idmap.json` to give known IPSO objects and resources the correct IDs. The file can be generated/updated using the `ipsoidmapper` program.
 
-## ODM linter
+## SDF linter
 
-The odmlint.js program can check if the given ODM SDF file matches to the SDF schema. By default the [sdf-alt-schema.json](sdf-alt-schema.json) is used but other schema file (e.g., [sdf-schema.json](https://github.com/one-data-model/language/blob/master/sdf-schema.json)) can be given as a second parameter.
-
-Usage: `node odmlint odmfile.json [schemafile.json]`
-
-Example: `node odmlint samples/bitmap.json`
-
-The output is a JSON object with two fields:
-* errorCount: number of checks that failed (or 0 if all checks passed)
-* errors: object with field for each type of error encountered
-  * fileName: errors on input filename
-  * schema: array of values with more details on schema errors
-
-For schema errors, the error messages are described in more detail here: https://github.com/epoberezkin/ajv#error-objects
+The linter is now available at the [OneDM tools repository](https://github.com/one-data-model/tools).
 
 ## IPSO ID mapper
 
