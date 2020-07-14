@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2020-06-28";
+const VERSION = "2020-07-13";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
@@ -135,7 +135,7 @@ function createOdm(data, copyrFromFile, licenseFromFile,
  */
 function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
   let sdfObj = odm.sdfObject[objJSONName];
-
+  let objJsonPathRoot = "#/sdfObject/" + objJSONName + "/";
   let objProplist = sdfObj.sdfProperty = {};
   let objActlist = sdfObj.sdfAction = {};
   let reqList = sdfObj.sdfRequired = [];
@@ -162,8 +162,8 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
       /* for re-usable resources add pointer and further details to
         the top-level props/actions */
       list[JSONName] = {
-        "sdfRef" : (isAction ? "#/sdfAction/" : "#/sdfProperty/") +
-          JSONName
+        "sdfRef" : objJsonPathRoot +
+          (isAction ? "sdfAction/" : "sdfProperty/") + JSONName
       }
       list = isAction ? odmActlist : odmProplist;
     }
@@ -174,8 +174,8 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
     }
 
     if (!isOptional(res)) {
-      reqList.push(isAction ? "#/sdfAction/" : "#/sdfProperty/" +
-        JSONName);
+      reqList.push(objJsonPathRoot +
+        (isAction ? "sdfAction/" : "sdfProperty/" + JSONName));
     }
 
     if (!isAction) {

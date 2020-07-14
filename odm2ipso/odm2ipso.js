@@ -127,8 +127,8 @@ function translateResources(odm, objName) {
       }
       if ('sdfRequired' in odm.sdfObject[objName]) {
         ipsoproperty.Mandatory = (odm.sdfObject[objName].sdfRequired.
-          includes("0/" + capability + "/" + res)) ?
-          ('Mandatory') : ('Optional');
+          includes("#/sdfObject/" + objName + "/" + capability +
+            "/" + res)) ? ('Mandatory') : ('Optional');
       }
       if ('type' in sdfresource) {
         ipsoproperty.Type = (sdfresource.type == 'array') ?
