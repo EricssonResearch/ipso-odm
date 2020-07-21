@@ -63,8 +63,8 @@ function translateODMObject(odm) {
   let sdfobject = odm.sdfObject[objname];
   let ipsoinfo = {};
 
-  if (idmap.map && idmap.map["#/" + objname]) {
-    objid = idmap.map["#/" + objname].id;
+  if (idmap.map && idmap.map["#/sdfObject/" + objname]) {
+    objid = idmap.map["#/sdfObject/" + objname].id;
   } else {
     debug("Using default object ID " + objid);
   }
@@ -108,7 +108,8 @@ function translateResources(odm, objName) {
     let capability = sdfcapabilities[cap];
     for (res in odm.sdfObject[objName][capability]) {
       let sdfresource = odm.sdfObject[objName][capability][res];
-      let propPointer = "#/" + objName + "/" + res;
+      let propPointer = "#/sdfObject/" + objName + "/" +
+        capability + "/" + res;
       let ipsoproperty = {
         "Name": res.replace(NAMEFIX_RE, NAMEFIX_CHAR)
       };

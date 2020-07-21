@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const xmldoc = require('xmldoc');
-const PATH_PREFIX = "#/";
+const PATH_PREFIX = "#/sdfObject/";
 
 /* How to convert Object names into ODM compatible names */
 const NAMEFIX_RE = new RegExp('[\\s,\\/]', "g");
@@ -54,9 +54,12 @@ function addMapping(data, map) {
 
     let name = res.childNamed("Name").val;
     let JSONName = name.replace(NAMEFIX_RE, NAMEFIX_CHAR);
+    let isAction = res.childNamed("Operations").val.includes("E");
 
-    map[PATH_PREFIX + objJSONName + "/" + JSONName] = {
-      "id" : JSON.parse(res.attr.ID)
+
+    map[PATH_PREFIX + objJSONName + "/" +
+      (isAction ? "sdfAction/" : "sdfProperty/") + JSONName] = {
+        "id" : JSON.parse(res.attr.ID)
     }
 
   });
