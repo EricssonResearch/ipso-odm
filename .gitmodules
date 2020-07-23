@@ -1,0 +1,3 @@
+[submodule "onedm-tools"]
+	path = onedm-tools
+	url = https://github.com/one-data-model/tools

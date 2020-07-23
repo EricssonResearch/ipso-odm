@@ -3,6 +3,7 @@
  * @author Ari Keränen
  */
 
+const fs = require('fs');
 const app = require('express')();
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -10,7 +11,6 @@ const debug = require('debug')('ipso-odm-ws');
 
 const ipso2odm = require('../ipso2odm');
 const odm2ipso = require('../odm2ipso');
-const odmlint = require('../odmlint');
 const INDEX_HTML = `
   <html><body>
    Web service wrapper for
@@ -20,6 +20,17 @@ const INDEX_HTML = `
 `
 
 const PORT = process.env.PORT || 8083;
+
+let sdflint;
+const DEF_SCHEMA_FILE = 'onedm-tools/sdflint/sdf-validation.jso.json';
+
+try {
+  sdflint = require('../onedm-tools/sdflint');
+  schema = JSON.parse(fs.readFileSync(
+    DEF_SCHEMA_FILE, { encoding: 'utf-8' }));
+} catch (err) {
+  console.log("No sdflint submodule? " + err);
+}
 
 app.use(helmet());
 app.use(bodyParser.raw({type: '*/*'}));
@@ -49,12 +60,18 @@ app.post('/ipso2odm', (req, res) => {
   }
 });
 
-app.post('/odmlint', (req, res) => {
+app.post('/sdflint', (req, res) => {
   debug("Request from: " + req.ip);
-  res.set('Content-Type', 'application/json')
+  res.set('Content-Type', 'application/json');
+
+  if (!sdflint || !schema) {
+    res.status(500).send("Linter not initialized");
+    return;
+  }
 
   try {
-    let lintRes = odmlint.odmLint(JSON.parse(req.body.toString().trim()));
+    let lintRes = sdflint.sdfLint(JSON.parse(req.body.toString().trim()),
+      schema);
     res.send(lintRes);
   } catch(err) {
     debug(err);
