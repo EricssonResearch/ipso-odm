@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2020-07-13";
+const VERSION = "2020-12-30";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
@@ -272,7 +272,7 @@ function addResourceDetails(sdfProp, lwm2mElement) {
   let lwRange = lwm2mElement.valueWithPath("RangeEnumeration");
 
   if (lwUnit) {
-    sdfProp.units = lwUnit;
+    sdfProp.unit = lwUnit;
   }
 
   if (lwRange) {

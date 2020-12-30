@@ -25,13 +25,15 @@ exports.getFormattedXml = getFormattedXml;
 let idmap = {
   map: {}
 };
-fs.readFile(ID_MAP_FILE, { encoding: 'utf-8' }, function (err, data) {
-  if (err) {
-    console.error("Can't read " + ID_MAP_FILE);
-  } else {
-    idmap = JSON.parse(data);
-  }
-});
+
+/* Reading ID map file */
+try {
+  data = fs.readFileSync(ID_MAP_FILE, { encoding: 'utf-8'});
+  idmap = JSON.parse(data);
+} catch (err) {
+  console.error("Error while reading " + ID_MAP_FILE +
+    ". Generating new IDs for objects and resources.");
+}
 
 if (require.main === module) { /* run as stand-alone? */
   if (process.argv.length == 3) {/* input file as cmd line parameter */
@@ -146,7 +148,7 @@ function translateResources(odm, objName) {
         ipsoproperty.RangeEnumeration = '';
       }
 
-      ipsoproperty.Units = sdfresource.units ? sdfresource.units : '';
+      ipsoproperty.Units = sdfresource.unit ? sdfresource.unit : '';
 
       ipsoproperty.Description = sdfresource.description;
 
