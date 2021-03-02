@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2020-12-30";
+const VERSION = "2021-02-11";
 const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
 const LWM2M_NS_PREFIX = "lwm2m";
 
@@ -204,7 +204,7 @@ function isOptional(lwm2mElement) {
 }
 
 /**
- * Adds "type" and/or "subtype" SDF element(s) to the given SDF
+ * Adds "type" and/or "sdfType" SDF element(s) to the given SDF
  * Property element based on type information in the given
  * LwM2M schema element.
  * @param {Object} sdfProp The SDF property element
@@ -213,7 +213,7 @@ function isOptional(lwm2mElement) {
 function addResourceType(sdfProp, lwm2mElement) {
   let lwType = lwm2mElement.childNamed("Type").val.toLowerCase();
   let type;
-  let subtype;
+  let sdfType;
 
   switch (lwType) {
     case "string":
@@ -230,10 +230,12 @@ function addResourceType(sdfProp, lwm2mElement) {
       sdfProp.minimum = 0;
       break;
     case "opaque":
-      subtype = "byte-string";
+      type = "string";
+      sdfType = "byte-string";
       break;
     case "time":
-      subtype = "unix-time";
+      type = "number";
+      sdfType = "unix-time";
       break;
     default:
       /* type not (yet) supported; TODO: CoreLnk as odmType */
@@ -247,15 +249,15 @@ function addResourceType(sdfProp, lwm2mElement) {
     if (type) {
       sdfProp.items.type = type;
     }
-    if (subtype) {
-      sdfProp.items.subtype = subtype;
+    if (sdfType) {
+      sdfProp.items.sdfType = sdfType;
     }
   } else {
     if (type) {
       sdfProp.type = type;
     }
-    if (subtype) {
-      sdfProp.subtype = subtype;
+    if (sdfType) {
+      sdfProp.sdfType = sdfType;
     }
   }
 

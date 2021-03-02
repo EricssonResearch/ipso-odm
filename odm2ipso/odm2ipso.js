@@ -135,9 +135,9 @@ function translateResources(odm, objName) {
       }
       if ('type' in sdfresource) {
         ipsoproperty.Type = (sdfresource.type == 'array') ?
-          convertType(sdfresource.items.type, sdfresource.items.subtype,
+          convertType(sdfresource.items.type, sdfresource.items.sdfType,
             sdfresource.items.minimum) :
-          convertType(sdfresource.type, sdfresource.subtype,
+          convertType(sdfresource.type, sdfresource.sdfType,
             sdfresource.minimum);
       }
 
@@ -169,36 +169,36 @@ function translateResources(odm, objName) {
   return resources;
 }
 
-function convertType(sdfType, sdfSubType, min) {
-  let type;
+function convertType(type, sdfType, min) {
+  let lwType;
 
-  switch (sdfType) {
+  switch (type) {
     case "string":
-      type = "String";
+      lwType = "String";
       break;
     case "boolean":
-      type = "Boolean";
+      lwType = "Boolean";
       break;
     case "number":
-      type = "Float";
+      lwType = "Float";
       break;
     case "integer":
       if (min == 0) {
-        type = "Unsigned Integer"
+        lwType = "Unsigned Integer"
       } else {
-        type = "Integer";
+        lwType = "Integer";
       }
       break;
     default:
       /* type not (yet) supported */
-      type = "unknown (" + sdfType + ")";
+      lwType = "unknown (" + type + ")";
   }
 
-  if (sdfSubType === "byte-string") {
-    type = "Opaque";
-  } else if (sdfSubType === "unix-time") {
-    type = "Time";
+  if (sdfType === "byte-string") {
+    lwType = "Opaque";
+  } else if (sdfType === "unix-time") {
+    lwType = "Time";
   }
 
-  return type;
+  return lwType;
 }
