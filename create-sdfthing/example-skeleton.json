@@ -1,0 +1,12 @@
+{
+    "info": {
+        "title": "ExampleThing",
+        "version": "TBD",
+        "copyright": "TBD",
+        "license": "TBD"
+    },
+    "namespace": {
+        "ex": "http://example.org/example/"
+    },
+    "defaultNamespace": "ex"
+}
