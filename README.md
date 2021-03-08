@@ -70,3 +70,14 @@ The program is picky with EOL characters so the XML schema files should be sent 
 Debugging prints can be enabled by adding `ipso2odm` or `ipso-odm-ws` to `DEBUG` environment variable. For example:
 
 `DEBUG=ipso2odm node ipso2odm samples/load.xml`
+
+## Create an sdfThing
+
+The create-sdfthing.js is a simple tool that creates an sdfThing, comprising of information in the skeleton json file containing the meta-information of the thing (e.g. info, namespace, and defaultNamespace) and the given SDF objects. If the parameter "-f <base for filename>" is not given, the created sdfThing is written to stdout.
+
+Usage: `node create-sdfthing.js [-f <base for filename>] [skeleton file] [list of sdf-object files]`
+
+Example: `node create-sdfthing.js -f TempPres temperature_pressure_sensor.json sdfobject-temperature.sdf.json sdfobject-pressure.sdf.json`
+
+This example creates a file sdfthing-TempPres.sdf.json using the temperature_pressure_sensor.json file as the base for the thing and merging the temperature and pressure objects into the thing.
+ 
