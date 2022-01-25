@@ -37,19 +37,17 @@ if (process.argv.length >= 4) {
   return;
 }
 /* Read the main json input file with the sdfThing skeleton */
-data = fs.readFileSync(skeletonFileName, { encoding: "utf-8" });
 try {
-  let odm = JSON.parse(data);
-  sdfNewInfo = odm;
+  sdfNewInfo = JSON.parse(fs.readFileSync(skeletonFileName,
+    { encoding: "utf-8" }));
 } catch (err) {
   console.log("Can't parse the main skeleton file");
 }
 
 /* Read the input files, create the sdfObjecdt */
 files.forEach((file) => {
-  data = fs.readFileSync(file, { encoding: "utf-8" });
   try {
-    let odm = JSON.parse(data);
+    let odm = JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
     sdfNewObject = odm.sdfObject;
     sdfObjects = { ...sdfObjects, ...sdfNewObject };
   } catch (err) {
