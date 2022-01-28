@@ -1,0 +1,1034 @@
+{
+  "m/s2": [
+    {
+      "unit": "metrePerSecondSquared",
+      "type": "Acceleration"
+    }
+  ],
+  "cm/s2": [
+    {
+      "unit": "centimetrePerSecondSquared",
+      "type": "Acceleration"
+    }
+  ],
+  "G": [
+    {
+      "unit": "gForce",
+      "type": "Acceleration"
+    }
+  ],
+  "rad": [
+    {
+      "unit": "radian",
+      "type": "Longitude"
+    }
+  ],
+  "degRad": [
+    {
+      "unit": "degreeOfArc",
+      "type": "Longitude"
+    }
+  ],
+  "minRad": [
+    {
+      "unit": "minuteOfArc",
+      "type": "Longitude"
+    }
+  ],
+  "secRad": [
+    {
+      "unit": "secondOfArc",
+      "type": "Longitude"
+    }
+  ],
+  "turn": [
+    {
+      "unit": "turn",
+      "type": "Longitude"
+    }
+  ],
+  "rad/s2?": [
+    {
+      "unit": "radianPerSecondSquared",
+      "type": "AngularAcceleration"
+    }
+  ],
+  "rad/s": [
+    {
+      "unit": "radianPerSecond",
+      "type": "AngularVelocity"
+    }
+  ],
+  "deg/s": [
+    {
+      "unit": "degreePerSecond",
+      "type": "AngularVelocity"
+    }
+  ],
+  "1/s": [
+    {
+      "unit": "revolutionPerSecond",
+      "type": "AngularVelocity"
+    }
+  ],
+  "1/min": [
+    {
+      "unit": "revolutionPerMinute",
+      "type": "AngularVelocity"
+    }
+  ],
+  "m2": [
+    {
+      "unit": "squareMetre",
+      "type": "Area"
+    }
+  ],
+  "cm2": [
+    {
+      "unit": "squareCentimetre",
+      "type": "Area"
+    }
+  ],
+  "mm2": [
+    {
+      "unit": "squareMillimetre",
+      "type": "Area"
+    }
+  ],
+  "km2": [
+    {
+      "unit": "squareKilometre",
+      "type": "Area"
+    }
+  ],
+  "ha": [
+    {
+      "unit": "hectare",
+      "type": "Area"
+    }
+  ],
+  "ft2": [
+    {
+      "unit": "squareFoot",
+      "type": "Area"
+    }
+  ],
+  "in2": [
+    {
+      "unit": "squareInch",
+      "type": "Area"
+    }
+  ],
+  "acre": [
+    {
+      "unit": "acre",
+      "type": "Area"
+    }
+  ],
+  "F": [
+    {
+      "unit": "farad",
+      "type": "Capacitance"
+    }
+  ],
+  "mF": [
+    {
+      "unit": "millifarad",
+      "type": "Capacitance"
+    }
+  ],
+  "uF": [
+    {
+      "unit": "microfarad",
+      "type": "Capacitance"
+    }
+  ],
+  "nF": [
+    {
+      "unit": "nanofarad",
+      "type": "Capacitance"
+    }
+  ],
+  "pF": [
+    {
+      "unit": "picofarad",
+      "type": "Capacitance"
+    }
+  ],
+  "A": [
+    {
+      "unit": "ampere",
+      "type": "Current"
+    }
+  ],
+  "uA": [
+    {
+      "unit": "microampere",
+      "type": "Current"
+    }
+  ],
+  "mA": [
+    {
+      "unit": "milliampere",
+      "type": "Current"
+    }
+  ],
+  "bit/s": [
+    {
+      "unit": "bitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Kibit/s": [
+    {
+      "unit": "kibibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Mibit/s": [
+    {
+      "unit": "mebibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Gibit/s": [
+    {
+      "unit": "gibibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Tibit/s": [
+    {
+      "unit": "tebibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Eibit/s": [
+    {
+      "unit": "exbibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Zibit/s": [
+    {
+      "unit": "zebibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "Yibit/s": [
+    {
+      "unit": "yobibitPerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "B/s": [
+    {
+      "unit": "bytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "KiB/s": [
+    {
+      "unit": "kibibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "MiB/s": [
+    {
+      "unit": "mebibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "GiB/s": [
+    {
+      "unit": "gibibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "TiB/s": [
+    {
+      "unit": "tebibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "EiB/s": [
+    {
+      "unit": "exbibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "ZiB/s": [
+    {
+      "unit": "zebibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "YiB/s": [
+    {
+      "unit": "yobibytePerSecond",
+      "type": "DataRate"
+    }
+  ],
+  "bit": [
+    {
+      "unit": "bit",
+      "type": "DataSize"
+    }
+  ],
+  "Kibit": [
+    {
+      "unit": "kibibit",
+      "type": "DataSize"
+    }
+  ],
+  "Mibit": [
+    {
+      "unit": "mebibit",
+      "type": "DataSize"
+    }
+  ],
+  "Gibit": [
+    {
+      "unit": "gibibit",
+      "type": "DataSize"
+    }
+  ],
+  "Tibit": [
+    {
+      "unit": "tebibit",
+      "type": "DataSize"
+    }
+  ],
+  "Eibit": [
+    {
+      "unit": "exbibit",
+      "type": "DataSize"
+    }
+  ],
+  "Zibit": [
+    {
+      "unit": "zebibit",
+      "type": "DataSize"
+    }
+  ],
+  "Yibit": [
+    {
+      "unit": "yobibit",
+      "type": "DataSize"
+    }
+  ],
+  "B": [
+    {
+      "unit": "byte",
+      "type": "DataSize"
+    }
+  ],
+  "KiB": [
+    {
+      "unit": "kibibyte",
+      "type": "DataSize"
+    }
+  ],
+  "MiB": [
+    {
+      "unit": "mebibyte",
+      "type": "DataSize"
+    }
+  ],
+  "GiB": [
+    {
+      "unit": "gibibyte",
+      "type": "DataSize"
+    }
+  ],
+  "TiB": [
+    {
+      "unit": "tebibyte",
+      "type": "DataSize"
+    }
+  ],
+  "EiB": [
+    {
+      "unit": "exbibyte",
+      "type": "DataSize"
+    }
+  ],
+  "ZiB": [
+    {
+      "unit": "zebibyte",
+      "type": "DataSize"
+    }
+  ],
+  "YiB": [
+    {
+      "unit": "yobibyte",
+      "type": "DataSize"
+    }
+  ],
+  "kg/m3": [
+    {
+      "unit": "kilogramPerCubicMetre",
+      "type": "Humidity"
+    }
+  ],
+  "g/m3": [
+    {
+      "unit": "gramPerCubicMetre",
+      "type": "Humidity"
+    }
+  ],
+  "m": [
+    {
+      "unit": "metre",
+      "type": "Length"
+    }
+  ],
+  "cm": [
+    {
+      "unit": "centimetre",
+      "type": "Length"
+    }
+  ],
+  "mm": [
+    {
+      "unit": "millimetre",
+      "type": "Length"
+    }
+  ],
+  "um": [
+    {
+      "unit": "micrometre",
+      "type": "Length"
+    }
+  ],
+  "nm": [
+    {
+      "unit": "nanometre",
+      "type": "Length"
+    }
+  ],
+  "km": [
+    {
+      "unit": "kilometre",
+      "type": "Length"
+    }
+  ],
+  "ft": [
+    {
+      "unit": "foot",
+      "type": "Length"
+    }
+  ],
+  "in": [
+    {
+      "unit": "inch",
+      "type": "Length"
+    }
+  ],
+  "mi": [
+    {
+      "unit": "mile",
+      "type": "Length"
+    }
+  ],
+  "nmi": [
+    {
+      "unit": "nauticalMile",
+      "type": "Length"
+    }
+  ],
+  "au": [
+    {
+      "unit": "astronomicalUnit",
+      "type": "Length"
+    }
+  ],
+  "C": [
+    {
+      "unit": "coulomb",
+      "type": "ElectricCharge"
+    }
+  ],
+  "J": [
+    {
+      "unit": "joule",
+      "type": "Energy"
+    }
+  ],
+  "kJ": [
+    {
+      "unit": "kilojoule",
+      "type": "Energy"
+    }
+  ],
+  "MJ": [
+    {
+      "unit": "megajoule",
+      "type": "Energy"
+    }
+  ],
+  "GJ": [
+    {
+      "unit": "gigajoule",
+      "type": "Energy"
+    }
+  ],
+  "eV": [
+    {
+      "unit": "electronvolt",
+      "type": "Energy"
+    }
+  ],
+  "MeV": [
+    {
+      "unit": "megaelectronvolt",
+      "type": "Energy"
+    }
+  ],
+  "kWh": [
+    {
+      "unit": "kilowattHour",
+      "type": "Energy"
+    }
+  ],
+  "N": [
+    {
+      "unit": "newton",
+      "type": "Thrust"
+    }
+  ],
+  "lbf": [
+    {
+      "unit": "pound",
+      "type": "Thrust"
+    }
+  ],
+  "ocf": [
+    {
+      "unit": "ounce",
+      "type": "Force"
+    }
+  ],
+  "tnf": [
+    {
+      "unit": "ton",
+      "type": "Force"
+    }
+  ],
+  "Hz": [
+    {
+      "unit": "hertz",
+      "type": "Frequency"
+    }
+  ],
+  "kHz": [
+    {
+      "unit": "kilohertz",
+      "type": "Frequency"
+    }
+  ],
+  "MHz": [
+    {
+      "unit": "megahertz",
+      "type": "Frequency"
+    }
+  ],
+  "GHz": [
+    {
+      "unit": "gigahertz",
+      "type": "Frequency"
+    }
+  ],
+  "lx": [
+    {
+      "unit": "lux",
+      "type": "Illuminance"
+    }
+  ],
+  "fc": [
+    {
+      "unit": "footcandle",
+      "type": "Illuminance"
+    }
+  ],
+  "H": [
+    {
+      "unit": "henry",
+      "type": "Inductance"
+    }
+  ],
+  "mH": [
+    {
+      "unit": "millihenry",
+      "type": "Inductance"
+    }
+  ],
+  "uH": [
+    {
+      "unit": "microhenry",
+      "type": "Inductance"
+    }
+  ],
+  "cd/m2": [
+    {
+      "unit": "candelaPerSquareMetre",
+      "type": "Luminance"
+    }
+  ],
+  "W": [
+    {
+      "unit": "watt",
+      "type": "Power"
+    }
+  ],
+  "uW": [
+    {
+      "unit": "microwatt",
+      "type": "Power"
+    }
+  ],
+  "mW": [
+    {
+      "unit": "milliwatt",
+      "type": "Power"
+    }
+  ],
+  "kW": [
+    {
+      "unit": "kilowatt",
+      "type": "Power"
+    }
+  ],
+  "MW": [
+    {
+      "unit": "megawatt",
+      "type": "Power"
+    }
+  ],
+  "GW": [
+    {
+      "unit": "gigawatt",
+      "type": "Power"
+    }
+  ],
+  "hp": [
+    {
+      "unit": "horsepower",
+      "type": "Power"
+    }
+  ],
+  "kWh/a": [
+    {
+      "unit": "kilowattHourPerYear",
+      "type": "Power"
+    }
+  ],
+  "lm": [
+    {
+      "unit": "lumen",
+      "type": "LuminousFlux"
+    }
+  ],
+  "cd": [
+    {
+      "unit": "candela",
+      "type": "LuminousIntensity"
+    }
+  ],
+  "Wb": [
+    {
+      "unit": "weber",
+      "type": "MagneticFlux"
+    }
+  ],
+  "Mx": [
+    {
+      "unit": "maxwell",
+      "type": "MagneticFlux"
+    }
+  ],
+  "T": [
+    {
+      "unit": "tesla",
+      "type": "MagneticInduction"
+    }
+  ],
+  "kg": [
+    {
+      "unit": "kilogram",
+      "type": "Mass"
+    }
+  ],
+  "g": [
+    {
+      "unit": "gram",
+      "type": "Mass"
+    }
+  ],
+  "mg": [
+    {
+      "unit": "milligram",
+      "type": "Mass"
+    }
+  ],
+  "ug": [
+    {
+      "unit": "microgram",
+      "type": "Mass"
+    }
+  ],
+  "tn": [
+    {
+      "unit": "tonne",
+      "type": "Mass"
+    }
+  ],
+  "slug": [
+    {
+      "unit": "slug",
+      "type": "Mass"
+    }
+  ],
+  "g/s": [
+    {
+      "unit": "gramPerSecond",
+      "type": "MassFlowRate"
+    }
+  ],
+  "kg/s": [
+    {
+      "unit": "kilogramPerSecond",
+      "type": "MassFlowRate"
+    }
+  ],
+  "g/h": [
+    {
+      "unit": "gramPerHour",
+      "type": "MassFlowRate"
+    }
+  ],
+  "kg/h": [
+    {
+      "unit": "kilogramPerHour",
+      "type": "MassFlowRate"
+    }
+  ],
+  "Pa": [
+    {
+      "unit": "pascal",
+      "type": "Pressure"
+    }
+  ],
+  "kPa": [
+    {
+      "unit": "kilopascal",
+      "type": "Pressure"
+    }
+  ],
+  "bar": [
+    {
+      "unit": "bar",
+      "type": "Pressure"
+    }
+  ],
+  "mbar": [
+    {
+      "unit": "millibar",
+      "type": "Pressure"
+    }
+  ],
+  "mmhg": [
+    {
+      "unit": "millimetresOfMercury",
+      "type": "Pressure"
+    }
+  ],
+  "psi": [
+    {
+      "unit": "poundPerSquareInch",
+      "type": "Pressure"
+    }
+  ],
+  "inHg": [
+    {
+      "unit": "inchesOfMercury",
+      "type": "Pressure"
+    }
+  ],
+  "inH2O": [
+    {
+      "unit": "inchesOfWater",
+      "type": "Pressure"
+    }
+  ],
+  "%RH": [
+    {
+      "unit": "unity percent",
+      "type": "RelativeHumidity"
+    }
+  ],
+  "Ohm": [
+    {
+      "unit": "ohm",
+      "type": "Resistance"
+    }
+  ],
+  "mOhm": [
+    {
+      "unit": "milliohm",
+      "type": "Resistance"
+    }
+  ],
+  "kOhm": [
+    {
+      "unit": "kiloohm",
+      "type": "Resistance"
+    }
+  ],
+  "MOhm": [
+    {
+      "unit": "megaohm",
+      "type": "Resistance"
+    }
+  ],
+  "dB": [
+    {
+      "unit": "decibel",
+      "type": "SoundPressure"
+    }
+  ],
+  "Bspl": [
+    {
+      "unit": "bel",
+      "type": "SoundPressure"
+    }
+  ],
+  "K": [
+    {
+      "unit": "kelvin",
+      "type": "Temperature"
+    }
+  ],
+  "Cel": [
+    {
+      "unit": "degreeCelsius",
+      "type": "Temperature"
+    }
+  ],
+  "Fh": [
+    {
+      "unit": "degreeFahrenheit",
+      "type": "Temperature"
+    }
+  ],
+  "ozf": [
+    {
+      "unit": "ounce",
+      "type": "Thrust"
+    }
+  ],
+  "tf": [
+    {
+      "unit": "ton",
+      "type": "Thrust"
+    }
+  ],
+  "s": [
+    {
+      "unit": "second",
+      "type": "TimeSpan"
+    }
+  ],
+  "ms": [
+    {
+      "unit": "millisecond",
+      "type": "TimeSpan"
+    }
+  ],
+  "us": [
+    {
+      "unit": "microsecond",
+      "type": "TimeSpan"
+    }
+  ],
+  "ns": [
+    {
+      "unit": "nanosecond",
+      "type": "TimeSpan"
+    }
+  ],
+  "min": [
+    {
+      "unit": "minute",
+      "type": "TimeSpan"
+    }
+  ],
+  "h": [
+    {
+      "unit": "hour",
+      "type": "TimeSpan"
+    }
+  ],
+  "d": [
+    {
+      "unit": "day",
+      "type": "TimeSpan"
+    }
+  ],
+  "a": [
+    {
+      "unit": "year",
+      "type": "TimeSpan"
+    }
+  ],
+  "m/s": [
+    {
+      "unit": "metrePerSecond",
+      "type": "Velocity"
+    }
+  ],
+  "cm/s": [
+    {
+      "unit": "centimetrePerSecond",
+      "type": "Velocity"
+    }
+  ],
+  "km/s": [
+    {
+      "unit": "kilometrePerSecond",
+      "type": "Velocity"
+    }
+  ],
+  "m/h": [
+    {
+      "unit": "metrePerHour",
+      "type": "Velocity"
+    }
+  ],
+  "km/h": [
+    {
+      "unit": "kilometrePerHour",
+      "type": "Velocity"
+    }
+  ],
+  "mph": [
+    {
+      "unit": "milePerHour",
+      "type": "Velocity"
+    }
+  ],
+  "mps": [
+    {
+      "unit": "milePerSecond",
+      "type": "Velocity"
+    }
+  ],
+  "kn": [
+    {
+      "unit": "knot",
+      "type": "Velocity"
+    }
+  ],
+  "V": [
+    {
+      "unit": "volt",
+      "type": "Voltage"
+    }
+  ],
+  "mV": [
+    {
+      "unit": "millivolt",
+      "type": "Voltage"
+    }
+  ],
+  "uV": [
+    {
+      "unit": "microvolt",
+      "type": "Voltage"
+    }
+  ],
+  "kV": [
+    {
+      "unit": "kilovolt",
+      "type": "Voltage"
+    }
+  ],
+  "MV": [
+    {
+      "unit": "megavolt",
+      "type": "Voltage"
+    }
+  ],
+  "m3": [
+    {
+      "unit": "cubicMetre",
+      "type": "Volume"
+    }
+  ],
+  "cm3": [
+    {
+      "unit": "cubicCentimetre",
+      "type": "Volume"
+    }
+  ],
+  "l": [
+    {
+      "unit": "litre",
+      "type": "Volume"
+    }
+  ],
+  "ml": [
+    {
+      "unit": "millilitre",
+      "type": "Volume"
+    }
+  ],
+  "ft3": [
+    {
+      "unit": "cubicFoot",
+      "type": "Volume"
+    }
+  ],
+  "in3": [
+    {
+      "unit": "cubicInch",
+      "type": "Volume"
+    }
+  ],
+  "floz": [
+    {
+      "unit": "fluidOunce",
+      "type": "Volume"
+    }
+  ],
+  "gal": [
+    {
+      "unit": "gallon",
+      "type": "Volume"
+    }
+  ],
+  "l/s": [
+    {
+      "unit": "litrePerSecond",
+      "type": "VolumeFlowRate"
+    }
+  ],
+  "ml/s": [
+    {
+      "unit": "millilitrePerSecond",
+      "type": "VolumeFlowRate"
+    }
+  ],
+  "l/h": [
+    {
+      "unit": "litrePerHour",
+      "type": "VolumeFlowRate"
+    }
+  ],
+  "ml/h": [
+    {
+      "unit": "millilitrePerHour",
+      "type": "VolumeFlowRate"
+    }
+  ]
+}

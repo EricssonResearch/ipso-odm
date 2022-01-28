@@ -1,0 +1,19 @@
+{
+  "name": "dtdl2sdf",
+  "version": "0.1.0",
+  "description": "DTDL to One Data Model SDF converter",
+  "main": "dtdl2sdf.js",
+  "dependencies": {
+    "debug": "^4.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EricssonResearch/ipso-odm.git"
+  },
+  "author": "Petri Laari",
+  "license": "BSD-3-Clause"
+}

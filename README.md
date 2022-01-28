@@ -28,6 +28,20 @@ Usage: `node odm2ipso [file-name]`
 
 Translates the given OneDM SDF file to a LwM2M schema file. The program also uses as input `idmap.json` to give known IPSO objects and resources the correct IDs. The file can be generated/updated using the `ipsoidmapper` program.
 
+## OneDM SDF to DTDL converter
+
+This tool translates the given OneDM SDF model to a DTDL model. 
+
+Usage: `node sdf2dtdl [file-name]`
+
+## DTDL to OneDM SDF converter
+
+This tool translates the DTDL model files to OneDM SDF models. 
+
+Usage: `node dtdl2sdf [file-name] [potential reference files]`
+
+The main DTDL file ("file-name") is the DTDL model to be converted. If the DTDL model contains "Component" definitions, i.e. extending the main DTDL model, these Components can be given as a list of "reference files", that are included in the conversion. If a DTDL model file described with the Component is not given, it will be described as a reference using sdfRef in the SDF file. 
+
 ## SDF linter
 
 The linter is now available at the [OneDM tools repository](https://github.com/one-data-model/tools).

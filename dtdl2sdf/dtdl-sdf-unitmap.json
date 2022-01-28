@@ -1,0 +1,289 @@
+{
+  "Acceleration": {
+    "metrePerSecondSquared": "m/s2",
+    "centimetrePerSecondSquared": "cm/s2",
+    "gForce": "G"
+  },
+  "Angle": {
+    "radian": "rad",
+    "degreeOfArc": "degRad",
+    "minuteOfArc": "minRad",
+    "secondOfArc": "secRad",
+    "turn": "turn"
+  },
+  "AngularAcceleration": {
+    "radianPerSecondSquared": "rad/s2?"
+  },
+  "AngularVelocity": {
+    "radianPerSecond": "rad/s",
+    "degreePerSecond": "deg/s",
+    "revolutionPerSecond": "1/s",
+    "revolutionPerMinute": "1/min"
+  },
+  "Area": {
+    "squareMetre": "m2",
+    "squareCentimetre": "cm2",
+    "squareMillimetre": "mm2",
+    "squareKilometre": "km2",
+    "hectare": "ha",
+    "squareFoot": "ft2",
+    "squareInch": "in2",
+    "acre": "acre"
+  },
+  "Capacitance": {
+    "farad": "F",
+    "millifarad": "mF",
+    "microfarad": "uF",
+    "nanofarad": "nF",
+    "picofarad": "pF"
+  },
+  "Current": {
+    "ampere": "A",
+    "microampere": "uA",
+    "milliampere": "mA"
+  },
+  "DataRate": {
+    "bitPerSecond": "bit/s",
+    "kibibitPerSecond": "Kibit/s",
+    "mebibitPerSecond": "Mibit/s",
+    "gibibitPerSecond": "Gibit/s",
+    "tebibitPerSecond": "Tibit/s",
+    "exbibitPerSecond": "Eibit/s",
+    "zebibitPerSecond": "Zibit/s",
+    "yobibitPerSecond": "Yibit/s",
+    "bytePerSecond": "B/s",
+    "kibibytePerSecond": "KiB/s",
+    "mebibytePerSecond": "MiB/s",
+    "gibibytePerSecond": "GiB/s",
+    "tebibytePerSecond": "TiB/s",
+    "exbibytePerSecond": "EiB/s",
+    "zebibytePerSecond": "ZiB/s",
+    "yobibytePerSecond": "YiB/s"
+  },
+  "DataSize": {
+    "bit": "bit",
+    "kibibit": "Kibit",
+    "mebibit": "Mibit",
+    "gibibit": "Gibit",
+    "tebibit": "Tibit",
+    "exbibit": "Eibit",
+    "zebibit": "Zibit",
+    "yobibit": "Yibit",
+    "byte": "B",
+    "kibibyte": "KiB",
+    "mebibyte": "MiB",
+    "gibibyte": "GiB",
+    "tebibyte": "TiB",
+    "exbibyte": "EiB",
+    "zebibyte": "ZiB",
+    "yobibyte": "YiB"
+  },
+  "Density": {
+    "kilogramPerCubicMetre": "kg/m3",
+    "gramPerCubicMetre": "g/m3"
+  },
+  "Distance": {
+    "metre": "m",
+    "centimetre": "cm",
+    "millimetre": "mm",
+    "micrometre": "um",
+    "nanometre": "nm",
+    "kilometre": "km",
+    "foot": "ft",
+    "inch": "in",
+    "mile": "mi",
+    "nauticalMile": "nmi",
+    "astronomicalUnit": "au"
+  },
+  "ElectricCharge": {
+    "coulomb": "C"
+  },
+  "Energy": {
+    "joule": "J",
+    "kilojoule": "kJ",
+    "megajoule": "MJ",
+    "gigajoule": "GJ",
+    "electronvolt": "eV",
+    "megaelectronvolt": "MeV",
+    "kilowattHour": "kWh"
+  },
+  "Force": {
+    "newton": "N",
+    "pound": "lbf",
+    "ounce": "ocf",
+    "ton": "tnf"
+  },
+  "Frequency": {
+    "hertz": "Hz",
+    "kilohertz": "kHz",
+    "megahertz": "MHz",
+    "gigahertz": "GHz"
+  },
+  "Humidity": {
+    "kilogramPerCubicMetre": "kg/m3",
+    "gramPerCubicMetre": "g/m3"
+  },
+  "Illuminance": {
+    "lux": "lx",
+    "footcandle": "fc"
+  },
+  "Inductance": {
+    "henry": "H",
+    "millihenry": "mH",
+    "microhenry": "uH"
+  },
+  "Latitude": {
+    "radian": "rad",
+    "degreeOfArc": "degRad",
+    "minuteOfArc": "minRad",
+    "secondOfArc": "secRad",
+    "turn": "turn"
+  },
+  "Longitude": {
+    "radian": "rad",
+    "degreeOfArc": "degRad",
+    "minuteOfArc": "minRad",
+    "secondOfArc": "secRad",
+    "turn": "turn"
+  },
+  "Length": {
+    "metre": "m",
+    "centimetre": "cm",
+    "millimetre": "mm",
+    "micrometre": "um",
+    "nanometre": "nm",
+    "kilometre": "km",
+    "foot": "ft",
+    "inch": "in",
+    "mile": "mi",
+    "nauticalMile": "nmi",
+    "astronomicalUnit": "au"
+  },
+  "Luminance": {
+    "candelaPerSquareMetre": "cd/m2"
+  },
+  "Luminosity": {
+    "watt": "W",
+    "microwatt": "uW",
+    "milliwatt": "mW",
+    "kilowatt": "kW",
+    "megawatt": "MW",
+    "gigawatt": "GW",
+    "horsepower": "hp",
+    "kilowattHourPerYear": "kWh/a"
+  },
+  "LuminousFlux": {
+    "lumen": "lm"
+  },
+  "LuminousIntensity": {
+    "candela": "cd"
+  },
+  "MagneticFlux": {
+    "weber": "Wb",
+    "maxwell": "Mx"
+  },
+  "MagneticInduction": {
+    "tesla": "T"
+  },
+  "Mass": {
+    "kilogram": "kg",
+    "gram": "g",
+    "milligram": "mg",
+    "microgram": "ug",
+    "tonne": "tn",
+    "slug": "slug"
+  },
+  "MassFlowRate": {
+    "gramPerSecond": "g/s",
+    "kilogramPerSecond": "kg/s",
+    "gramPerHour": "g/h",
+    "kilogramPerHour": "kg/h"
+  },
+  "Power": {
+    "watt": "W",
+    "microwatt": "uW",
+    "milliwatt": "mW",
+    "kilowatt": "kW",
+    "megawatt": "MW",
+    "gigawatt": "GW",
+    "horsepower": "hp",
+    "kilowattHourPerYear": "kWh/a"
+  },
+  "Pressure": {
+    "pascal": "Pa",
+    "kilopascal": "kPa",
+    "bar": "bar",
+    "millibar": "mbar",
+    "millimetresOfMercury": "mmhg",
+    "poundPerSquareInch": "psi",
+    "inchesOfMercury": "inHg",
+    "inchesOfWater": "inH2O"
+  },
+  "RelativeHumidity": {
+    "unity percent": "%RH"
+  },
+  "Resistance": {
+    "ohm": "Ohm",
+    "milliohm": "mOhm",
+    "kiloohm": "kOhm",
+    "megaohm": "MOhm"
+  },
+  "SoundPressure": {
+    "decibel": "dB",
+    "bel": "Bspl"
+  },
+  "Temperature": {
+    "kelvin": "K",
+    "degreeCelsius": "Cel",
+    "degreeFahrenheit": "Fh"
+  },
+  "Thrust": {
+    "newton": "N",
+    "pound": "lbf",
+    "ounce": "ozf",
+    "ton": "tf"
+  },
+  "TimeSpan": {
+    "second": "s",
+    "millisecond": "ms",
+    "microsecond": "us",
+    "nanosecond": "ns",
+    "minute": "min",
+    "hour": "h",
+    "day": "d",
+    "year": "a"
+  },
+  "Velocity": {
+    "metrePerSecond": "m/s",
+    "centimetrePerSecond": "cm/s",
+    "kilometrePerSecond": "km/s",
+    "metrePerHour": "m/h",
+    "kilometrePerHour": "km/h",
+    "milePerHour": "mph",
+    "milePerSecond": "mps",
+    "knot": "kn"
+  },
+  "Voltage": {
+    "volt": "V",
+    "millivolt": "mV",
+    "microvolt": "uV",
+    "kilovolt": "kV",
+    "megavolt": "MV"
+  },
+  "Volume": {
+    "cubicMetre": "m3",
+    "cubicCentimetre": "cm3",
+    "litre": "l",
+    "millilitre": "ml",
+    "cubicFoot": "ft3",
+    "cubicInch": "in3",
+    "fluidOunce": "floz",
+    "gallon": "gal"
+  },
+  "VolumeFlowRate": {
+    "litrePerSecond": "l/s",
+    "millilitrePerSecond": "ml/s",
+    "litrePerHour": "l/h",
+    "millilitrePerHour": "ml/h"
+  }
+}
