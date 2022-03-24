@@ -70,7 +70,11 @@ function translateODMObject(odm) {
   } else {
     debug("Using default object ID " + objid);
   }
-  ipsoinfo.Name = objname.replace(NAMEFIX_RE, NAMEFIX_CHAR);
+  if (sdfobject.label) {
+    ipsoinfo.Name = sdfobject.label;
+  } else {
+    ipsoinfo.Name = objname.replace(NAMEFIX_RE, NAMEFIX_CHAR);
+  }
 
   if ('description' in sdfobject) {
     ipsoinfo.Description1 = sdfobject.description;
@@ -112,9 +116,13 @@ function translateResources(odm, objName) {
       let sdfresource = odm.sdfObject[objName][capability][res];
       let propPointer = "#/sdfObject/" + objName + "/" +
         capability + "/" + res;
-      let ipsoproperty = {
-        "Name": res.replace(NAMEFIX_RE, NAMEFIX_CHAR)
-      };
+      let ipsoproperty = {};
+
+      if (sdfresource.label) {
+        ipsoproperty.Name = sdfresource.label;
+      } else {
+        ipsoproperty.Name = res.replace(NAMEFIX_RE, NAMEFIX_CHAR);
+      }
 
       if ('writable' in sdfresource) {
         ipsoproperty.Operations = (sdfresource.writable) ?
