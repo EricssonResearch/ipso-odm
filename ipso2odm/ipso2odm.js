@@ -8,9 +8,9 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2021-02-11";
-const LWM2M_ODM_NS = "http://example.com/lwm2m/odm";
-const LWM2M_NS_PREFIX = "lwm2m";
+const VERSION = "2022-02-21";
+const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
+const LWM2M_NS_PREFIX = "oma";
 
 const ODM_FILE_PREFIX = "sdfobject-";
 const ODM_FILE_SUFFIX = ".sdf.json";
@@ -21,15 +21,16 @@ const NAMEFIX_CHAR = "_";
 
 /* default values if can't parse from input file */
 const DEF_COPYRIGHT = "Copyright (c) 2018-2020 IPSO";
-const DEF_LICENSE =
-  "https://github.com/one-data-model/oneDM/blob/master/LICENSE";
+const DEF_LICENSE = "BSD-3-Clause";
+
+const READ_COPYR_FROM_FILE = true;
 
 /* range of LwM2M/IPSO re-usable resource IDs */
 const RE_RES_MIN = 2048
 const RE_RES_MAX = 26240
 
-/* use IPSO/LWM2M (true) or ODM default (false) namespace */
-const USE_LWM2M_NS = false;
+/* add IPSO/LWM2M namespace info? */
+const USE_LWM2M_NS = true;
 
 exports.createOdm = createOdm;
 
@@ -38,7 +39,7 @@ if (require.main === module) { /* run as stand-alone? */
     var inFile = process.argv[2];
     fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
       try {
-        let odm = createOdm(data);
+        let odm = createOdm(data, READ_COPYR_FROM_FILE);
         console.log(JSON.stringify(odm, null, 2));
       } catch (err) {
         console.log("Can't convert. " + err);
@@ -49,7 +50,7 @@ if (require.main === module) { /* run as stand-alone? */
   process.argv.slice(2).forEach (inFile => {
     fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
       try {
-        let odm = createOdm(data);
+        let odm = createOdm(data, READ_COPYR_FROM_FILE);
         let objname = Object.getOwnPropertyNames(odm.sdfObject)[0].
           toLocaleLowerCase();
         let outFile = ODM_FILE_PREFIX + objname + ODM_FILE_SUFFIX;
