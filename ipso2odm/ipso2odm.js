@@ -182,7 +182,7 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
     }
 
     if (USE_LWM2M_IDS) {
-      odmItem["oma:id"] = res.attr.ID;
+      odmItem["oma:id"] = parseInt(res.attr.ID);
     }
 
     if (!isOptional(res)) {
