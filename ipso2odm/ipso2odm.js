@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2022-02-21";
+const VERSION = "2022-10-12";
 const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
 const LWM2M_NS_PREFIX = "oma";
 
@@ -31,6 +31,8 @@ const RE_RES_MAX = 26240
 
 /* add IPSO/LWM2M namespace info? */
 const USE_LWM2M_NS = true;
+/** add ID numbers to definitions? */
+const USE_LWM2M_IDS = true;
 
 exports.createOdm = createOdm;
 
@@ -86,6 +88,7 @@ function createOdm(data, copyrFromFile, licenseFromFile,
   let objJSONName = objName.replace(NAMEFIX_RE, NAMEFIX_CHAR);
   let copyRight = DEF_COPYRIGHT;
   let license = DEF_LICENSE;
+  let objectID = xmlObj.childNamed("ObjectID").val;
 
   /* hacky way to extract copyright and license info from XML comment */
   let copyStart = data.indexOf("\nCopyright");
@@ -102,7 +105,7 @@ function createOdm(data, copyrFromFile, licenseFromFile,
 
   odm.info = {
     "title":  TITLE_PREFIX + " " + xmlObj.childNamed("Name").val +
-      " (Object ID " + xmlObj.childNamed("ObjectID").val + ")" ,
+      " (Object ID " + objectID + ")" ,
     "version": VERSION,
     "copyright": copyRight,
     "license": license
@@ -116,8 +119,12 @@ function createOdm(data, copyrFromFile, licenseFromFile,
 
   sdfObj[objJSONName] = {
     "label" : objName,
-    "description" : xmlObj.childNamed("Description1").val.trim(),
+    "description" : xmlObj.childNamed("Description1").val.trim()
   };
+
+  if (USE_LWM2M_IDS) {
+    sdfObj[objJSONName]["oma:id"] = objectID;
+  }
 
   odm.sdfObject = sdfObj;
 
@@ -172,6 +179,10 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
     let odmItem = list[JSONName] = {
       "label": name,
       "description": res.childNamed("Description").val.trim(),
+    }
+
+    if (USE_LWM2M_IDS) {
+      odmItem["oma:id"] = res.attr.ID;
     }
 
     if (!isOptional(res)) {

@@ -14,6 +14,7 @@ const PREAMPLE_PREFIX =
   '<?xml version="1.0" encoding="UTF-8"?>\n<!--\n'
 const ID_MAP_FILE = "idmap.json";
 const DEFAULT_OBJ_ID = 65535;
+const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
 
 /* convert name underscores to spaces (for ipso2odm round trip) */
 const NAMEFIX_RE = new RegExp('[_]', "g");
@@ -31,8 +32,8 @@ try {
   data = fs.readFileSync(ID_MAP_FILE, { encoding: 'utf-8'});
   idmap = JSON.parse(data);
 } catch (err) {
-  console.error("Error while reading " + ID_MAP_FILE +
-    ". Generating new IDs for objects and resources.");
+  console.error("Can't read " + ID_MAP_FILE +
+    ". Generating missing IDs for objects and resources.");
 }
 
 if (require.main === module) { /* run as stand-alone? */
@@ -64,8 +65,22 @@ function translateODMObject(odm) {
   let objid = DEFAULT_OBJ_ID;
   let sdfobject = odm.sdfObject[objname];
   let ipsoinfo = {};
+  let omaIdQuality = "";
 
-  if (idmap.map && idmap.map["#/sdfObject/" + objname]) {
+  /* find CURIE for OMA namespace (if any) and set ecosystem specific
+     quality for OMA IDs */
+  if (odm.namespace) {
+    Object.keys(odm.namespace).forEach(ns => {
+      if (odm.namespace[ns] == LWM2M_ODM_NS) {
+        omaIdQuality = ns + ":id";
+      }
+    });
+  }
+
+  if (omaIdQuality && sdfobject[omaIdQuality]) {
+    objid = sdfobject[omaIdQuality];
+  }
+  else if (idmap.map && idmap.map["#/sdfObject/" + objname]) {
     objid = idmap.map["#/sdfObject/" + objname].id;
   } else {
     debug("Using default object ID " + objid);
@@ -86,7 +101,8 @@ function translateODMObject(odm) {
   ipsoinfo.ObjectVersion = VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
   ipsoinfo.Mandatory = 'Optional';
-  ipsoinfo.Resources = toXML(translateResources(odm, objname));
+  ipsoinfo.Resources = toXML(translateResources(odm, objname,
+    omaIdQuality));
 
   let mo = toXML({
     _name: 'Object',
@@ -105,7 +121,7 @@ function translateODMObject(odm) {
   return lwm2m
 }
 
-function translateResources(odm, objName) {
+function translateResources(odm, objName, omaIdQuality) {
   let resources = [];
   let sdfcapabilities = ["sdfProperty", "sdfAction"];
   let privateId = 1;
@@ -160,7 +176,10 @@ function translateResources(odm, objName) {
 
       ipsoproperty.Description = sdfresource.description;
 
-      if (idmap.map[propPointer]) {
+      if (omaIdQuality && sdfresource[omaIdQuality]) {
+        resourceID = sdfresource[omaIdQuality];
+      }
+      else if (idmap.map[propPointer]) {
         resourceID = idmap.map[propPointer].id;
       } else {
         resourceID = privateId++;
