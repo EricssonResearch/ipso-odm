@@ -64,7 +64,7 @@ if (require.main === module) { /* run as stand-alone? */
           }
         });
       } catch (err) {
-        console.log("Can't convert. " + err);
+        console.log("Can't convert file " + inFile + ". "  + err);
       }
       });
     });
@@ -156,7 +156,7 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
   }
 
   xmlObj.childNamed("Resources").children.forEach(res => {
-    if (res.type === "text") {
+    if (res.type === "text" || res.type === "comment") {
       return;
     }
 
