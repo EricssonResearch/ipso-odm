@@ -292,8 +292,15 @@ function addResourceDetails(sdfProp, lwm2mElement) {
   if (lwRange) {
     if (lwRange.includes("..")) {
       let limits = lwRange.split("..");
-      sdfProp.minimum = JSON.parse(limits[0]);
-      sdfProp.maximum = JSON.parse(limits[1]);
+      let min = JSON.parse(limits[0]);
+      let max = JSON.parse(limits[1]);
+      if (lwm2mElement.valueWithPath("Type") == "String") {
+        sdfProp.minLength = min;
+        sdfProp.maxLength = max;
+      } else {
+        sdfProp.minimum = min;
+        sdfProp.maximum = max;
+      }
     }
     /* TODO: handle other range types */
   }
