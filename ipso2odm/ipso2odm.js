@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2022-10-12";
+const VERSION = "2023-03-26";
 const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
 const LWM2M_NS_PREFIX = "oma";
 
@@ -187,7 +187,7 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
 
     if (!isOptional(res)) {
       reqList.push(objJsonPathRoot +
-        (isAction ? "sdfAction/" : "sdfProperty/" + JSONName));
+        (isAction ? "sdfAction/" : "sdfProperty/") + JSONName);
     }
 
     if (!isAction) {
