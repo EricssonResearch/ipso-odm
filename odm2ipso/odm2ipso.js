@@ -153,9 +153,19 @@ function translateResources(odm, objName, omaIdQuality) {
           ('Multiple') : ('Single');
       }
       if ('sdfRequired' in odm.sdfObject[objName]) {
-        ipsoproperty.Mandatory = (odm.sdfObject[objName].sdfRequired.
-          includes("#/sdfObject/" + objName + "/" + capability +
-            "/" + res)) ? ('Mandatory') : ('Optional');
+        let required = odm.sdfObject[objName].sdfRequired;
+        if ((required.includes("#/sdfObject/" + objName + "/" + capability +
+            "/" + res)) ||
+            required.includes(res)) {
+          ipsoproperty.Mandatory = 'Mandatory';
+        } else {
+          ipsoproperty.Mandatory = 'Optional';
+        }
+      }
+      if ('sdfRequired' in sdfresource) {
+        if (sdfresource.sdfRequired.includes(true)) {
+          ipsoproperty.Mandatory = 'Mandatory';
+        }
       }
       if ('type' in sdfresource) {
         ipsoproperty.Type = (sdfresource.type == 'array') ?

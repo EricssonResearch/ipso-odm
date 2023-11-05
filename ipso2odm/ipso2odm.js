@@ -8,7 +8,7 @@ const xmldoc = require('xmldoc');
 const debug = require('debug')('ipso2odm');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2023-03-26";
+const VERSION = "2023-11-05";
 const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
 const LWM2M_NS_PREFIX = "oma";
 
@@ -33,6 +33,8 @@ const RE_RES_MAX = 26240
 const USE_LWM2M_NS = true;
 /** add ID numbers to definitions? */
 const USE_LWM2M_IDS = true;
+/** use local (instead of global) version of sdfRequired */
+const USE_LOCAL_SDFREQ = true;
 
 exports.createOdm = createOdm;
 
@@ -149,6 +151,8 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
   let reqList = sdfObj.sdfRequired = [];
   let odmProplist;
   let odmActlist;
+  let sdfReqProps = [];
+  let sdfReqActions = [];
 
   if (reusableResRefs) {
     odmProplist = odm.sdfProperty = {};
@@ -164,14 +168,14 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
     let JSONName = name.replace(NAMEFIX_RE, NAMEFIX_CHAR);
     let isAction = res.childNamed("Operations").val.includes("E");
     let list = isAction ? objActlist : objProplist;
+    let affType = (isAction ? "sdfAction" : "sdfProperty");
 
     if (reusableResRefs &&
         res.attr.ID >= RE_RES_MIN && res.attr.ID <= RE_RES_MAX) {
       /* for re-usable resources add pointer and further details to
         the top-level props/actions */
       list[JSONName] = {
-        "sdfRef" : objJsonPathRoot +
-          (isAction ? "sdfAction/" : "sdfProperty/") + JSONName
+        "sdfRef" : objJsonPathRoot + affType + "/" + JSONName
       }
       list = isAction ? odmActlist : odmProplist;
     }
@@ -186,8 +190,15 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
     }
 
     if (!isOptional(res)) {
-      reqList.push(objJsonPathRoot +
-        (isAction ? "sdfAction/" : "sdfProperty/") + JSONName);
+      if (USE_LOCAL_SDFREQ) {
+        if (isAction) {
+          sdfReqActions.push(JSONName);
+        } else {
+          sdfReqProps.push(JSONName);
+        }
+      } else {
+        reqList.push(objJsonPathRoot + affType + "/" + JSONName);
+      }
     }
 
     if (!isAction) {
@@ -202,6 +213,23 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
       addResourceDetails(odmItem, res);
     }
   });
+
+  if (USE_LOCAL_SDFREQ) {
+    let defNames = Object.keys(objProplist).concat(Object.keys(objActlist));
+    if (defNames.length != new Set(defNames).size) {
+      /* duplicate definition names found; fall back to using global names */
+      sdfReqProps.forEach (req => {
+        reqList.push(objJsonPathRoot + "sdfProperty/" + req);
+      });
+      sdfReqActions.forEach (req => {
+        reqList.push(objJsonPathRoot + "sdfAction/" + req);
+      });
+    } else {
+      /* no duplicates; use local names */
+      sdfObj.sdfRequired = sdfReqProps.concat(sdfReqActions);
+    }
+  }
+
 }
 
 
