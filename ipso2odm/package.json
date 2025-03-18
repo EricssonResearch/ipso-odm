@@ -4,7 +4,7 @@
   "description": "IPSO XML schema to One Data Model SDF converter",
   "main": "ipso2odm.js",
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {},
