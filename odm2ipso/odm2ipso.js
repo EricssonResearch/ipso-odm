@@ -14,7 +14,8 @@ const PREAMPLE_PREFIX =
   '<?xml version="1.0" encoding="UTF-8"?>\n<!--\n'
 const ID_MAP_FILE = "idmap.json";
 const DEFAULT_OBJ_ID = 65535;
-const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
+const OMA_ID_QUALITY = "oma:id";
+
 
 /* convert name underscores to spaces (for ipso2odm round trip) */
 const NAMEFIX_RE = new RegExp('[_]', "g");
@@ -65,20 +66,10 @@ function translateODMObject(odm) {
   let objid = DEFAULT_OBJ_ID;
   let sdfobject = odm.sdfObject[objname];
   let ipsoinfo = {};
-  let omaIdQuality = "";
 
-  /* find CURIE for OMA namespace (if any) and set ecosystem specific
-     quality for OMA IDs */
-  if (odm.namespace) {
-    Object.keys(odm.namespace).forEach(ns => {
-      if (odm.namespace[ns] == LWM2M_ODM_NS) {
-        omaIdQuality = ns + ":id";
-      }
-    });
-  }
 
-  if (omaIdQuality && sdfobject[omaIdQuality]) {
-    objid = sdfobject[omaIdQuality];
+  if (sdfobject[OMA_ID_QUALITY]) {
+    objid = sdfobject[OMA_ID_QUALITY];
   }
   else if (idmap.map && idmap.map["#/sdfObject/" + objname]) {
     objid = idmap.map["#/sdfObject/" + objname].id;
@@ -101,8 +92,8 @@ function translateODMObject(odm) {
   ipsoinfo.ObjectVersion = VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
   ipsoinfo.Mandatory = 'Optional';
-  ipsoinfo.Resources = toXML(translateResources(odm, objname,
-    omaIdQuality));
+  ipsoinfo.Resources = toXML(translateResources(odm, objname));
+  ipsoinfo.Description2 = "";
 
   let mo = toXML({
     _name: 'Object',
@@ -121,7 +112,7 @@ function translateODMObject(odm) {
   return lwm2m
 }
 
-function translateResources(odm, objName, omaIdQuality) {
+function translateResources(odm, objName) {
   let resources = [];
   let sdfcapabilities = ["sdfProperty", "sdfAction"];
   let privateId = 1;
@@ -186,8 +177,8 @@ function translateResources(odm, objName, omaIdQuality) {
 
       ipsoproperty.Description = sdfresource.description;
 
-      if (omaIdQuality && sdfresource[omaIdQuality]) {
-        resourceID = sdfresource[omaIdQuality];
+      if (sdfresource[OMA_ID_QUALITY]) {
+        resourceID = sdfresource[OMA_ID_QUALITY];
       }
       else if (idmap.map[propPointer]) {
         resourceID = idmap.map[propPointer].id;

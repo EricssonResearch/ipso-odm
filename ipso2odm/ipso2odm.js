@@ -239,6 +239,9 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
  * @param {XmlElement} lwm2mElement The LwM2M schema element
  */
 function isOptional(lwm2mElement) {
+  if (!lwm2mElement.childNamed("Mandatory")) {
+    throw new Error("'Mandatory' element missing from:\n" + lwm2mElement);
+  }
   return lwm2mElement.childNamed("Mandatory").
     val.toLowerCase().trim() === "optional";
 }
