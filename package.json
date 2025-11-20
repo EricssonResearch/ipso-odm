@@ -5,7 +5,7 @@
   "dependencies": {
     "ipso2odm": "file:ipso2odm",
     "odm2ipso": "file:odm2ipso",
-    "npm": ">=11.6.2"
+    "npm": ">=11.6.3"
   },
   "devDependencies": {},
   "scripts": {
