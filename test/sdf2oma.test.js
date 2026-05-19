@@ -333,6 +333,30 @@ describe('SDF to OMA Converter', function() {
     });
   });
 
+  describe('LwM2M Version', function() {
+    it('should output LwM2M version 1.1', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<LWM2MVersion>1.1</LWM2MVersion>'));
+    });
+
+    it('should output Object version 1.0', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<ObjectVersion>1.0</ObjectVersion>'));
+    });
+  });
+
 
   describe('Operations Mapping', function() {
     it('should set R operation for readable properties', function() {

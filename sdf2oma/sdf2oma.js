@@ -9,7 +9,8 @@ const debug = require('debug')('sdf2oma');
 const { toXML } = require('jstoxml');
 const NO_ESCAPE = { contentReplacements: false };
 
-const VERSION = "1.0";
+const LWM2M_VERSION = "1.1";
+const OBJECT_VERSION = "1.0";
 const OBJ_URN_BASE = 'urn:oma:lwm2m:';
 const PREAMPLE_PREFIX =
   '<?xml version="1.0" encoding="UTF-8"?>\n<!--\n'
@@ -105,9 +106,9 @@ function translateSDFObject(sdf) {
   }
 
   ipsoinfo.ObjectURN = OBJ_URN_BASE + urnSuffix + ":" + objid +
-    (VERSION != "1.0" ? ":" + VERSION : "");
-  ipsoinfo.LWM2MVersion = VERSION;
-  ipsoinfo.ObjectVersion = VERSION;
+    (OBJECT_VERSION != "1.0" ? ":" + OBJECT_VERSION : "");
+  ipsoinfo.LWM2MVersion = LWM2M_VERSION;
+  ipsoinfo.ObjectVersion = OBJECT_VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
   ipsoinfo.Mandatory = 'Optional';
   ipsoinfo.Resources = toXML(translateResources(sdf, objname), NO_ESCAPE);
