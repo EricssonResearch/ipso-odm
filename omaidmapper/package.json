@@ -1,11 +1,11 @@
 {
-  "name": "ipso2odm",
-  "version": "0.1.0",
-  "description": "IPSO XML schema to One Data Model SDF converter",
-  "main": "ipso2odm.js",
+  "name": "ipsoidmapper",
+  "version": "0.2.0",
+  "description": "OMA Object ID mapper",
+  "main": "omaidmapper.js",
   "dependencies": {
-    "debug": "^4.3.1",
-    "xmldoc": "^1.1.2"
+    "debug": "^4.4.3",
+    "xmldoc": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {

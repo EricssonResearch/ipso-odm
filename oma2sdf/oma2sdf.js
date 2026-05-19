@@ -1,50 +1,50 @@
 /**
- * IPSO model to One Data Model SDF converter
+ * OMA model to SDF converter
  * @author Ari Keränen
  */
 
 const fs = require('fs');
 const xmldoc = require('xmldoc');
-const debug = require('debug')('ipso2odm');
+const debug = require('debug')('oma2sdf');
 
 const TITLE_PREFIX = "OMA LwM2M";
-const VERSION = "2023-11-05";
-const LWM2M_ODM_NS = "https://onedm.org/ecosystem/oma";
+const VERSION = "2026-05-19";
+const LWM2M_SDF_NS = "https://onedm.org/ecosystem/oma";
 const LWM2M_NS_PREFIX = "oma";
 
-const ODM_FILE_PREFIX = "sdfobject-";
-const ODM_FILE_SUFFIX = ".sdf.json";
+const SDF_FILE_PREFIX = "sdfobject-";
+const SDF_FILE_SUFFIX = ".sdf.json";
 
-/* How to convert Object names into ODM compatible names */
+/* How to convert Object names into SDF compatible names */
 const NAMEFIX_RE = new RegExp('[\\s,\\/]', "g");
 const NAMEFIX_CHAR = "_";
 
 /* default values if can't parse from input file */
-const DEF_COPYRIGHT = "Copyright (c) 2018-2020 IPSO";
+const DEF_COPYRIGHT = "Copyright (c) 2018-2020 OMA";
 const DEF_LICENSE = "BSD-3-Clause";
 
 const READ_COPYR_FROM_FILE = true;
 
-/* range of LwM2M/IPSO re-usable resource IDs */
+/* range of LwM2M/OMA re-usable resource IDs */
 const RE_RES_MIN = 2048
 const RE_RES_MAX = 26240
 
-/* add IPSO/LWM2M namespace info? */
+/* add OMA/LWM2M namespace info? */
 const USE_LWM2M_NS = true;
 /** add ID numbers to definitions? */
 const USE_LWM2M_IDS = true;
 /** use local (instead of global) version of sdfRequired */
 const USE_LOCAL_SDFREQ = true;
 
-exports.createOdm = createOdm;
+exports.createSdf = createSdf;
 
 if (require.main === module) { /* run as stand-alone? */
   if (process.argv.length == 3) { /* file as command line parameter */
     var inFile = process.argv[2];
     fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
       try {
-        let odm = createOdm(data, READ_COPYR_FROM_FILE);
-        console.log(JSON.stringify(odm, null, 2));
+        let sdf = createSdf(data, READ_COPYR_FROM_FILE);
+        console.log(JSON.stringify(sdf, null, 2));
       } catch (err) {
         console.log("Can't convert. " + err);
       }
@@ -54,12 +54,12 @@ if (require.main === module) { /* run as stand-alone? */
   process.argv.slice(2).forEach (inFile => {
     fs.readFile(inFile, {encoding: 'utf-8'}, function(err, data) {
       try {
-        let odm = createOdm(data, READ_COPYR_FROM_FILE);
-        let objname = Object.getOwnPropertyNames(odm.sdfObject)[0].
+        let sdf = createSdf(data, READ_COPYR_FROM_FILE);
+        let objname = Object.getOwnPropertyNames(sdf.sdfObject)[0].
           toLocaleLowerCase();
-        let outFile = ODM_FILE_PREFIX + objname + ODM_FILE_SUFFIX;
+        let outFile = SDF_FILE_PREFIX + objname + SDF_FILE_SUFFIX;
         debug("Outfile: " + outFile);
-        fs.writeFile(outFile, JSON.stringify(odm, null, 2), err => {
+        fs.writeFile(outFile, JSON.stringify(sdf, null, 2), err => {
           if (err) {
             console.error(err);
             return;
@@ -74,15 +74,15 @@ if (require.main === module) { /* run as stand-alone? */
 }
 
 /**
- * Creates SDF OneDM object document based on the given LwM2M object
+ * Creates SDF object document based on the given LwM2M object
  * schema document
  * @param data The LwM2M object schema document as UTF-8
  * @returns SDF document as JSON object
  */
-function createOdm(data, copyrFromFile, licenseFromFile,
+function createSdf(data, copyrFromFile, licenseFromFile,
     reusableResRefs) {
   let doc = new xmldoc.XmlDocument(data);
-  let odm = {};
+  let sdf = {};
   let xmlObj = doc.childNamed("Object");
   let sdfObj = {};
   let objName = xmlObj.childNamed("Name").val;
@@ -105,7 +105,7 @@ function createOdm(data, copyrFromFile, licenseFromFile,
     }
   }
 
-  odm.info = {
+  sdf.info = {
     "title":  TITLE_PREFIX + " " + xmlObj.childNamed("Name").val +
       " (Object ID " + objectID + ")" ,
     "version": VERSION,
@@ -114,9 +114,9 @@ function createOdm(data, copyrFromFile, licenseFromFile,
   }
 
   if (USE_LWM2M_NS) {
-    odm.namespace = {};
-    odm.namespace[LWM2M_NS_PREFIX] = LWM2M_ODM_NS;
-    odm.defaultNamespace = LWM2M_NS_PREFIX;
+    sdf.namespace = {};
+    sdf.namespace[LWM2M_NS_PREFIX] = LWM2M_SDF_NS;
+    sdf.defaultNamespace = LWM2M_NS_PREFIX;
   }
 
   sdfObj[objJSONName] = {
@@ -128,35 +128,35 @@ function createOdm(data, copyrFromFile, licenseFromFile,
     sdfObj[objJSONName]["oma:id"] = objectID;
   }
 
-  odm.sdfObject = sdfObj;
+  sdf.sdfObject = sdfObj;
 
-  addResources(xmlObj, odm, objJSONName, reusableResRefs);
+  addResources(xmlObj, sdf, objJSONName, reusableResRefs);
 
-  return odm;
+  return sdf;
 };
 
 /**
  * Adds resources from the XML object to the SDF object
  * @param xmlObj The LwM2M XML object where to get resource info
- * @param odm The OneDM SDF document where to store resource info
+ * @param sdf The SDF document where to store resource info
  * @param objJSONName The JSON formatted name of the object
- * @param reusableResRefs IPSO re-usable resources using references
+ * @param reusableResRefs OMA re-usable resources using references
  *  (not inlined)
  */
-function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
-  let sdfObj = odm.sdfObject[objJSONName];
+function addResources(xmlObj, sdf, objJSONName, reusableResRefs) {
+  let sdfObj = sdf.sdfObject[objJSONName];
   let objJsonPathRoot = "#/sdfObject/" + objJSONName + "/";
   let objProplist = sdfObj.sdfProperty = {};
   let objActlist = sdfObj.sdfAction = {};
   let reqList = sdfObj.sdfRequired = [];
-  let odmProplist;
-  let odmActlist;
+  let sdfProplist;
+  let sdfActlist;
   let sdfReqProps = [];
   let sdfReqActions = [];
 
   if (reusableResRefs) {
-    odmProplist = odm.sdfProperty = {};
-    odmActlist = odm.sdfAction = {};
+    sdfProplist = sdf.sdfProperty = {};
+    sdfActlist = sdf.sdfAction = {};
   }
 
   xmlObj.childNamed("Resources").children.forEach(res => {
@@ -177,7 +177,7 @@ function addResources(xmlObj, odm, objJSONName, reusableResRefs) {
       list[JSONName] = {
         "sdfRef" : objJsonPathRoot + affType + "/" + JSONName
       }
-      list = isAction ? odmActlist : odmProplist;
+      list = isAction ? sdfActlist : sdfProplist;
     }
 
     let odmItem = list[JSONName] = {
@@ -286,7 +286,7 @@ function addResourceType(sdfProp, lwm2mElement) {
   }
 
   if (lwm2mElement.childNamed("MultipleInstances").val === "Multiple") {
-    /* convert multi-instance resources to ODM array values */
+    /* convert multi-instance resources to SDF array values */
     sdfProp.type = "array";
     sdfProp.items = {};
     if (type) {
@@ -309,7 +309,7 @@ function addResourceType(sdfProp, lwm2mElement) {
 /**
  * Adds "minimum", "maximum", and "unit" SDF element(s) to the given SDF
  * Property element based on information in the given LwM2M schema element.
- * @param {Object} sdfProp The ODM property element
+ * @param {Object} sdfProp The SDF property element
  * @param {XmlElement} lwm2mElement The LwM2M schema element
  */
 function addResourceDetails(sdfProp, lwm2mElement) {

@@ -1,11 +1,11 @@
 /**
- * One Data Model SDF to IPSO converter
+ * SDF to OMA converter
  * @author Niklas Widell
  */
 
 var fs = require('fs');
 var xmlformatter = require('xml-formatter');
-const debug = require('debug')('odm2ipso');
+const debug = require('debug')('sdf2oma');
 const { toXML } = require('jstoxml');
 
 const VERSION = "1.0";
@@ -17,7 +17,8 @@ const DEFAULT_OBJ_ID = 65535;
 const OMA_ID_QUALITY = "oma:id";
 
 
-/* convert name underscores to spaces (for ipso2odm round trip) */
+
+/* convert name underscores to spaces (for ipso2sdf round trip) */
 const NAMEFIX_RE = new RegExp('[_]', "g");
 const NAMEFIX_CHAR = " ";
 
@@ -42,8 +43,8 @@ if (require.main === module) { /* run as stand-alone? */
     var inFile = process.argv[2];
     fs.readFile(inFile, { encoding: 'utf-8' }, function (err, data) {
       try {
-        let odm = JSON.parse(data);
-        console.log(getFormattedXml(odm));
+        let sdf = JSON.parse(data);
+        console.log(getFormattedXml(sdf));
       } catch (err) {
         console.log("Can't convert. " + err);
       }
@@ -51,20 +52,20 @@ if (require.main === module) { /* run as stand-alone? */
   }
 }
 
-function getFormattedXml(odm) {
-  let ipsoinfo = translateODMObject(odm);
-  let preamble = PREAMPLE_PREFIX + odm.info.copyright + '\n' +
-    odm.info.license + '\n-->\n';
+function getFormattedXml(sdf) {
+  let ipsoinfo = translateSDFObject(sdf);
+  let preamble = PREAMPLE_PREFIX + sdf.info.copyright + '\n' +
+    sdf.info.license + '\n-->\n';
   let ipsofile = preamble + xmlformatter(ipsoinfo,
     { collapseContent: true });
 
   return ipsofile;
 }
 
-function translateODMObject(odm) {
-  let objname = Object.keys(odm.sdfObject)[0];
+function translateSDFObject(sdf) {
+  let objname = Object.keys(sdf.sdfObject)[0];
   let objid = DEFAULT_OBJ_ID;
-  let sdfobject = odm.sdfObject[objname];
+  let sdfobject = sdf.sdfObject[objname];
   let ipsoinfo = {};
 
 
@@ -92,7 +93,7 @@ function translateODMObject(odm) {
   ipsoinfo.ObjectVersion = VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
   ipsoinfo.Mandatory = 'Optional';
-  ipsoinfo.Resources = toXML(translateResources(odm, objname));
+  ipsoinfo.Resources = toXML(translateResources(sdf, objname));
   ipsoinfo.Description2 = "";
 
   let mo = toXML({
@@ -112,15 +113,15 @@ function translateODMObject(odm) {
   return lwm2m
 }
 
-function translateResources(odm, objName) {
+function translateResources(sdf, objName) {
   let resources = [];
   let sdfcapabilities = ["sdfProperty", "sdfAction"];
   let privateId = 1;
 
   for (cap in sdfcapabilities) {
     let capability = sdfcapabilities[cap];
-    for (res in odm.sdfObject[objName][capability]) {
-      let sdfresource = odm.sdfObject[objName][capability][res];
+    for (res in sdf.sdfObject[objName][capability]) {
+      let sdfresource = sdf.sdfObject[objName][capability][res];
       let propPointer = "#/sdfObject/" + objName + "/" +
         capability + "/" + res;
       let ipsoproperty = {};
@@ -131,20 +132,29 @@ function translateResources(odm, objName) {
         ipsoproperty.Name = res.replace(NAMEFIX_RE, NAMEFIX_CHAR);
       }
 
-      if ('writable' in sdfresource) {
-        ipsoproperty.Operations = (sdfresource.writable) ?
-         ("RW") : ("R");
-      } else if (capability === 'sdfAction') {
+      if (capability === 'sdfAction') {
         ipsoproperty.Operations = "E";
       } else {
-        ipsoproperty.Operations = "RW";
+        let readable = ('readable' in sdfresource) ? sdfresource.readable : true;
+        let writable = ('writable' in sdfresource) ? sdfresource.writable : true;
+        
+        if (readable && writable) {
+          ipsoproperty.Operations = "RW";
+        } else if (readable && !writable) {
+          ipsoproperty.Operations = "R";
+        } else if (!readable && writable) {
+          ipsoproperty.Operations = "W";
+        } else {
+          // Neither readable nor writable - unusual case
+          ipsoproperty.Operations = "";
+        }
       }
       if ('type' in sdfresource) {
         ipsoproperty.MultipleInstances = (sdfresource.type == 'array') ?
           ('Multiple') : ('Single');
       }
-      if ('sdfRequired' in odm.sdfObject[objName]) {
-        let required = odm.sdfObject[objName].sdfRequired;
+      if ('sdfRequired' in sdf.sdfObject[objName]) {
+        let required = sdf.sdfObject[objName].sdfRequired;
         if ((required.includes("#/sdfObject/" + objName + "/" + capability +
             "/" + res)) ||
             required.includes(res)) {

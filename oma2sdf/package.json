@@ -1,11 +1,10 @@
 {
-  "name": "ipsoidmapper",
-  "version": "0.1.0",
-  "description": "One Data Model ID to IPSO ID mapper",
-  "main": "ipsoidmapper.js",
+  "name": "oma2sdf",
+  "version": "0.2.0",
+  "description": "OMA XML schema to SDF converter",
+  "main": "oma2sdf.js",
   "dependencies": {
-    "debug": "^4.1.1",
-    "npm": "^6.9.2",
+    "debug": "^4.3.1",
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {},

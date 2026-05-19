@@ -1,6 +1,6 @@
-# IPSO - OneDM data model translation toolkit
+# OMA - SDF data model translation toolkit
 
-Toolkit for automated translation between [IPSO/LwM2M models](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) and [One Data Model SDF](https://github.com/one-data-model/language/blob/master/sdf.md).
+Toolkit for automated translation between OMA [LwM2M models](https://www.openmobilealliance.org/specifications/registries/objects) and Semantic Definition Format [RFC 9880](https://www.rfc-editor.org/rfc/rfc9880.html).
 
 ## Installing
 
@@ -8,43 +8,43 @@ Toolkit for automated translation between [IPSO/LwM2M models](http://www.openmob
 * Clone this repo
 * run `npm install` to install dependencies
 
-## IPSO to OneDM SDF converter
+## OMA to SDF converter
 
-Usage: `node ipso2odm [file-name(s)]`
+Usage: `node oma2sdf [file-name(s)]`
 
 When only a single file name is given, the resulting SDF is printed to the screen (stdout).
 
-When multiple file names are given, the output of each conversion is saved to `odmobject-object_name-sdf.json` file where `object_name` is the object name from each schema file.
+When multiple file names are given, the output of each conversion is saved to `sdfobject-object_name-sdf.json` file where `object_name` is the object name from each schema file.
 
 ### Examples
 
-`node ipso2odm samples/load.xml`
+`node oma2sdf samples/load.xml`
 
-`node ipso2odm samples/*.xml`
+`node oma2sdf samples/*.xml`
 
-## OneDM SDF to IPSO converter
+## SDF to OMA converter
 
-Usage: `node odm2ipso [file-name]`
+Usage: `node sdf2oma [file-name]`
 
-Translates the given OneDM SDF file to a LwM2M schema file. The program also uses as input `idmap.json` to give known IPSO objects and resources the correct IDs. The file can be generated/updated using the `ipsoidmapper` program.
+Translates the given SDF file to a LwM2M schema file. The program also uses as input `idmap.json` to give known OMA objects and resources the correct IDs. The file can be generated/updated using the `omaidmapper` program.
 
 ## SDF linter
 
 The linter is now available at the [OneDM tools repository](https://github.com/one-data-model/tools).
 
-## IPSO ID mapper
+## OMA ID mapper
 
-The ipsoidmapper.js can generate a protocol binding ID mapping file out of a set of IPSO/LwM2M schema files.
+The omaidmapper.js can generate a protocol binding ID mapping file out of a set of OMA/LwM2M schema files.
 
-Usage: `node ipsoidmapper [file-name(s)]`
+Usage: `node omaidmapper [file-name(s)]`
 
-Example: `node ipsoidmapper samples/*.xml`
+Example: `node omaidmapper samples/*.xml`
 
 ## Web service mode
 
-The ipso2odm, odm2ipso, and sdflint programs can also run in a web service mode with `ipso-odm-ws`. The web service mode is not installed by default but can be installed with:
+The oma2sdf, sdf2oma, and sdflint programs can also run in a web service mode with `oma-sdf-ws`. The web service mode is not installed by default but can be installed with:
 
-`npm install ipso-odm-ws`
+`npm install oma-sdf-ws`
 
 If sdflint functionality is needed, the sdflint submodule needs to be initiated:
 `git submodule update --init`
@@ -55,21 +55,21 @@ And dependencies for the sdflint installed:
 
 The web service mode is run with:
 
-`node ipso-odm-ws`
+`node oma-sdf-ws`
 
-In this mode an HTTP server is started that accepts POSTs to `/ipso2odm` with IPSO/LwM2M XML schema files in payload, POSTs to `/odm2ipso` with OneDM SDF files in payload, and POSTs to `/sdflint` with SDF files in payload. If the payload is well-formed, the server returns the JSON output of ipso2odm or sdflint respectively, or a LwM2M schema file for odm2ipso.
+In this mode an HTTP server is started that accepts POSTs to `/oma2sdf` with OMA/LwM2M XML schema files in payload, POSTs to `/sdf2oma` with SDF files in payload, and POSTs to `/sdflint` with SDF files in payload. If the payload is well-formed, the server returns the JSON output of oma2sdf or sdflint respectively, or a LwM2M schema file for sdf2oma.
 
 The HTTP port where the server is accepting requests can be defined with the `PORT` environment variable. By default port 8083 is used.
 
 The program is picky with EOL characters so the XML schema files should be sent "as-is". For example:
 
-`curl --data-binary "@samples/load.xml" http://localhost:8083/ipso2odm`
+`curl --data-binary "@samples/load.xml" http://localhost:8083/oma2sdf`
 
 ## Debugging
 
-Debugging prints can be enabled by adding `ipso2odm` or `ipso-odm-ws` to `DEBUG` environment variable. For example:
+Debugging prints can be enabled by adding `oma2sdf` or `oma-sdf-ws` to `DEBUG` environment variable. For example:
 
-`DEBUG=ipso2odm node ipso2odm samples/load.xml`
+`DEBUG=oma2sdf node oma2sdf samples/load.xml`
 
 ## Create an sdfThing
 
@@ -80,4 +80,3 @@ Usage: `node create-sdfthing.js [-f <base for filename>] [skeleton file] [list o
 Example: `node create-sdfthing.js -f TempPres temperature_pressure_sensor.json sdfobject-temperature.sdf.json sdfobject-pressure.sdf.json`
 
 This example creates a file sdfthing-TempPres.sdf.json using the temperature_pressure_sensor.json file as the base for the thing and merging the temperature and pressure objects into the thing.
- 

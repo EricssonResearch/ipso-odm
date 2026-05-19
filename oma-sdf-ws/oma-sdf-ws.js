@@ -1,5 +1,5 @@
 /** 
- * Web service wrapper for IPSO OneDM toolkit
+ * Web service wrapper for OMA SDF toolkit
  * @author Ari Keränen
  */
 
@@ -7,15 +7,15 @@ const fs = require('fs');
 const app = require('express')();
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const debug = require('debug')('ipso-odm-ws');
+const debug = require('debug')('oma-sdf-ws');
 
-const ipso2odm = require('../ipso2odm');
-const odm2ipso = require('../odm2ipso');
+const oma2sdf = require('../oma2sdf');
+const sdf2oma = require('../sdf2oma');
 const INDEX_HTML = `
   <html><body>
    Web service wrapper for
    <a href="https://github.com/EricssonResearch/ipso-odm#web-service-mode">
-   IPSO OneDM toolkit</a>.
+   OMA SDF toolkit</a>.
   </body></html>
 `
 
@@ -43,15 +43,15 @@ app.use(function(req, res, next) { /* allow CORS */
 
 
 
-app.post('/ipso2odm', (req, res) => {
+app.post('/oma2sdf', (req, res) => {
   debug("Request from: " + req.ip);
   debug("Copyright parameter: " +  req.query.copyright);
   debug("License parameter: " + req.query.license);
   try {
-    let odm = ipso2odm.createOdm(req.body.toString().trim(),
+    let sdf = oma2sdf.createSdf(req.body.toString().trim(),
       JSON.parse(req.query.copyright), JSON.parse(req.query.license));
-    let json = JSON.stringify(odm, null, 2);
-    debug("Converted info title: %s", odm.info.title);
+    let json = JSON.stringify(sdf, null, 2);
+    debug("Converted info title: %s", sdf.info.title);
     res.set('Content-Type', 'application/json');
     res.send(json);
   } catch(err) {
@@ -80,12 +80,12 @@ app.post('/sdflint', (req, res) => {
 });
 
 
-app.post('/odm2ipso', (req, res) => {
+app.post('/sdf2oma', (req, res) => {
   debug("Request from: " + req.ip);
   try {
-      let ipso = odm2ipso.getFormattedXml(JSON.parse(req.body));
+      let omaXml = sdf2oma.getFormattedXml(JSON.parse(req.body));
       res.set('Content-Type', 'text/xml');
-      res.send(ipso);
+      res.send(omaXml);
   } catch(err) {
     debug(err);
     res.status(400).send("Can't convert. " + err+"\n");
