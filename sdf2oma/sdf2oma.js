@@ -70,7 +70,7 @@ function translateSDFObject(sdf) {
   let ipsoinfo = {};
 
 
-  if (sdfobject[OMA_ID_QUALITY]) {
+  if (OMA_ID_QUALITY in sdfobject) {
     objid = sdfobject[OMA_ID_QUALITY];
   }
   else if (idmap.map && idmap.map["#/sdfObject/" + objname]) {
@@ -188,7 +188,7 @@ function translateResources(sdf, objName) {
 
       ipsoproperty.Description = sdfresource.description;
 
-      if (sdfresource[OMA_ID_QUALITY]) {
+      if (OMA_ID_QUALITY in sdfresource) {
         resourceID = sdfresource[OMA_ID_QUALITY];
       }
       else if (idmap.map[propPointer]) {

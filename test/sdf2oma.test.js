@@ -267,6 +267,24 @@ describe('SDF to OMA Converter', function() {
       const xml = sdf2oma.getFormattedXml(sdf);
       assert(xml.includes('<ObjectID>65535</ObjectID>'), 'Should use default ID');
     });
+
+    it('should handle oma:id with value zero', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: {
+            sdfProperty: {
+              value: { type: 'number', 'oma:id': 0, description: 'Zero ID resource' }
+            }
+          }
+        }
+      };
+
+      const xml = sdf2oma.getFormattedXml(sdf);
+      const doc = new xmldoc.XmlDocument(xml);
+      const item = doc.childNamed('Object').childNamed('Resources').childNamed('Item');
+      assert.strictEqual(item.attr.ID, '0', 'Should use ID 0 from oma:id');
+    });
   });
 
   describe('Operations Mapping', function() {
