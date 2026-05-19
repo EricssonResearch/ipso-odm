@@ -287,6 +287,53 @@ describe('SDF to OMA Converter', function() {
     });
   });
 
+  describe('URN Generation', function() {
+    it('should use "oma" suffix for Object IDs below 1024', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { 'oma:id': '3', sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<ObjectURN>urn:oma:lwm2m:oma:3</ObjectURN>'));
+    });
+
+    it('should use "ext" suffix for Object IDs 2048-10240', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { 'oma:id': '3300', sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<ObjectURN>urn:oma:lwm2m:ext:3300</ObjectURN>'));
+    });
+
+    it('should use "x" suffix for Object IDs 10241 and above', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { 'oma:id': '10242', sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<ObjectURN>urn:oma:lwm2m:x:10242</ObjectURN>'));
+    });
+
+    it('should use "RESERVED" suffix for Object IDs 1024-2047', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: { 'oma:id': '1500', sdfProperty: {} }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<ObjectURN>urn:oma:lwm2m:RESERVED:1500</ObjectURN>'));
+    });
+  });
+
+
   describe('Operations Mapping', function() {
     it('should set R operation for readable properties', function() {
       const sdf = {

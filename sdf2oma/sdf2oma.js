@@ -10,7 +10,7 @@ const { toXML } = require('jstoxml');
 const NO_ESCAPE = { contentReplacements: false };
 
 const VERSION = "1.0";
-const OBJ_URN_BASE = 'urn:oma:lwm2m:ext:';
+const OBJ_URN_BASE = 'urn:oma:lwm2m:';
 const PREAMPLE_PREFIX =
   '<?xml version="1.0" encoding="UTF-8"?>\n<!--\n'
 const ID_MAP_FILE = "idmap.json";
@@ -89,7 +89,23 @@ function translateSDFObject(sdf) {
   }
 
   ipsoinfo.ObjectID = objid;
-  ipsoinfo.ObjectURN = OBJ_URN_BASE + objid;
+  /*
+    see Object ID classes in
+    https://technical.openmobilealliance.org/OMNA/LwM2M/LwM2MRegistry.html
+  */
+  let urnSuffix;
+  if (objid < 1024) {
+    urnSuffix = "oma";
+  } else if (objid < 2048) {
+    urnSuffix = "RESERVED";
+  } else if (objid < 10241) {
+    urnSuffix = "ext";
+  } else {
+    urnSuffix = "x";
+  }
+
+  ipsoinfo.ObjectURN = OBJ_URN_BASE + urnSuffix + ":" + objid +
+    (VERSION != "1.0" ? ":" + VERSION : "");
   ipsoinfo.LWM2MVersion = VERSION;
   ipsoinfo.ObjectVersion = VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
