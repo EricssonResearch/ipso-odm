@@ -4,9 +4,9 @@
   "description": "SDF to OMA converter",
   "main": "sdf2oma.js",
   "dependencies": {
-    "debug": "^4.3.1",
-    "xml-formatter": "^1.2.0",
-    "jstoxml": "^1.6.0"
+    "debug": "^4.4.3",
+    "xml-formatter": "^3.7.0",
+    "jstoxml": "^7.1.0"
   },
   "devDependencies": {},
   "scripts": {

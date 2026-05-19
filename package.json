@@ -4,8 +4,7 @@
   "description": "Tools for SDF / OMA model conversions",
   "dependencies": {
     "oma2sdf": "file:oma2sdf",
-    "sdf2oma": "file:sdf2oma",
-    "npm": ">=11.7.0"
+    "sdf2oma": "file:sdf2oma"
   },
   "devDependencies": {},
   "scripts": {

@@ -4,8 +4,8 @@
   "description": "OMA XML schema to SDF converter",
   "main": "oma2sdf.js",
   "dependencies": {
-    "debug": "^4.3.1",
-    "xmldoc": "^1.1.2"
+    "debug": "^4.4.3",
+    "xmldoc": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {

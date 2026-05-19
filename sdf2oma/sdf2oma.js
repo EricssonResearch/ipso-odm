@@ -7,6 +7,7 @@ var fs = require('fs');
 var xmlformatter = require('xml-formatter');
 const debug = require('debug')('sdf2oma');
 const { toXML } = require('jstoxml');
+const NO_ESCAPE = { contentReplacements: false };
 
 const VERSION = "1.0";
 const OBJ_URN_BASE = 'urn:oma:lwm2m:ext:';
@@ -93,14 +94,14 @@ function translateSDFObject(sdf) {
   ipsoinfo.ObjectVersion = VERSION;
   ipsoinfo.MultipleInstances = 'Multiple';
   ipsoinfo.Mandatory = 'Optional';
-  ipsoinfo.Resources = toXML(translateResources(sdf, objname));
+  ipsoinfo.Resources = toXML(translateResources(sdf, objname), NO_ESCAPE);
   ipsoinfo.Description2 = "";
 
   let mo = toXML({
     _name: 'Object',
-    _content: toXML(ipsoinfo),
+    _content: toXML(ipsoinfo, NO_ESCAPE),
     _attrs: { ObjectType: "MODefinition" }
-  });
+  }, NO_ESCAPE);
   let lwm2m = toXML({
     _name: 'LWM2M',
     _content: mo,
@@ -109,7 +110,7 @@ function translateSDFObject(sdf) {
       'xsi:noNamespaceSchemaLocation':
         'http://openmobilealliance.org/tech/profiles/LWM2M.xsd'
     }
-  })
+  }, NO_ESCAPE)
   return lwm2m
 }
 
@@ -198,9 +199,9 @@ function translateResources(sdf, objName) {
 
       let resource = toXML({
         _name: 'Item',
-        _content: toXML(ipsoproperty),
+        _content: toXML(ipsoproperty, NO_ESCAPE),
         _attrs: { ID: resourceID }
-      });
+      }, NO_ESCAPE);
       resources.push(resource);
     };
   };

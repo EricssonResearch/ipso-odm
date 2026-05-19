@@ -4,8 +4,8 @@
  */
 
 const fs = require('fs');
-const app = require('express')();
-const bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
 const helmet = require('helmet');
 const debug = require('debug')('oma-sdf-ws');
 
@@ -33,7 +33,7 @@ try {
 }
 
 app.use(helmet());
-app.use(bodyParser.raw({type: '*/*'}));
+app.use(express.raw({type: '*/*'}));
 app.use(function(req, res, next) { /* allow CORS */
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers",
