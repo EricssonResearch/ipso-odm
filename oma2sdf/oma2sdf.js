@@ -254,9 +254,17 @@ function isOptional(lwm2mElement) {
  * @param {XmlElement} lwm2mElement The LwM2M schema element
  */
 function addResourceType(sdfProp, lwm2mElement) {
-  let lwType = lwm2mElement.childNamed("Type").val.toLowerCase();
+  let typeElement = lwm2mElement.childNamed("Type");
+  let lwType;
   let type;
   let sdfType;
+  let sdfRef;
+
+  if (!typeElement || !typeElement.val) {
+    return; /* missing element or content */
+  }
+
+  lwType = typeElement.val.toLowerCase();
 
   switch (lwType) {
     case "string":
@@ -280,15 +288,23 @@ function addResourceType(sdfProp, lwm2mElement) {
       type = "number";
       sdfType = "unix-time";
       break;
+    case "objlnk":
+      sdfRef = "oma:objlnk";
+      break;
+    case "corelnk":
+      sdfRef = "oma:corelnk";
+      break;
     default:
-      /* type not (yet) supported; TODO: CoreLnk as odmType */
-      type = "unknown (" + lwType + ")";
+      throw new Error("Unsupported LwM2M type: " + lwType);
   }
 
   if (lwm2mElement.childNamed("MultipleInstances").val === "Multiple") {
     /* convert multi-instance resources to SDF array values */
     sdfProp.type = "array";
     sdfProp.items = {};
+    if (sdfRef) {
+      sdfProp.items.sdfRef = sdfRef;
+    }
     if (type) {
       sdfProp.items.type = type;
     }
@@ -296,6 +312,9 @@ function addResourceType(sdfProp, lwm2mElement) {
       sdfProp.items.sdfType = sdfType;
     }
   } else {
+    if (sdfRef) {
+      sdfProp.sdfRef = sdfRef;
+    }
     if (type) {
       sdfProp.type = type;
     }

@@ -172,9 +172,11 @@ function translateResources(sdf, objName) {
       if ('type' in sdfresource) {
         ipsoproperty.Type = (sdfresource.type == 'array') ?
           convertType(sdfresource.items.type, sdfresource.items.sdfType,
-            sdfresource.items.minimum) :
+            sdfresource.items.minimum, sdfresource.items.sdfRef) :
           convertType(sdfresource.type, sdfresource.sdfType,
-            sdfresource.minimum);
+            sdfresource.minimum, sdfresource.sdfRef);
+      } else if ('sdfRef' in sdfresource) {
+        ipsoproperty.Type = convertType(null, null, null, sdfresource.sdfRef);
       }
 
       if ('minimum' in sdfresource && 'maximum' in sdfresource) {
@@ -208,8 +210,14 @@ function translateResources(sdf, objName) {
   return resources;
 }
 
-function convertType(type, sdfType, min) {
+function convertType(type, sdfType, min, sdfRef) {
   let lwType;
+
+  if (sdfRef === "oma:objlnk") {
+    return "Objlnk";
+  } else if (sdfRef === "oma:corelnk") {
+    return "Corelnk";
+  }
 
   switch (type) {
     case "string":

@@ -345,6 +345,59 @@ describe('SDF to OMA Converter', function() {
     });
   });
 
+
+  describe('Link Type Conversions', function() {
+    it('should convert sdfRef oma:objlnk to Objlnk type', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: {
+            sdfProperty: {
+              link: { sdfRef: 'oma:objlnk', description: 'Object link' }
+            }
+          }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<Type>Objlnk</Type>'));
+    });
+
+    it('should convert sdfRef oma:corelnk to Corelnk type', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: {
+            sdfProperty: {
+              link: { sdfRef: 'oma:corelnk', description: 'Core link' }
+            }
+          }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<Type>Corelnk</Type>'));
+    });
+
+    it('should handle sdfRef in array items', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: '', license: '' },
+        sdfObject: {
+          Test: {
+            sdfProperty: {
+              links: {
+                type: 'array',
+                items: { sdfRef: 'oma:objlnk' },
+                description: 'Object links'
+              }
+            }
+          }
+        }
+      };
+      const xml = sdf2oma.getFormattedXml(sdf);
+      assert(xml.includes('<Type>Objlnk</Type>'));
+      assert(xml.includes('<MultipleInstances>Multiple</MultipleInstances>'));
+    });
+  });
+
   describe('Advanced Type Conversions', function() {
     it('should convert byte-string sdfType to Opaque', function() {
       const sdf = {

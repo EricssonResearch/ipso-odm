@@ -379,6 +379,67 @@ describe('OMA to SDF Converter', function() {
     });
   });
 
+
+  describe('Link Type Conversions', function() {
+    it('should convert Objlnk to sdfRef', function() {
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<LWM2M><Object ObjectType="MODefinition">
+  <Name>Test</Name><Description1>Test</Description1>
+  <ObjectID>9999</ObjectID><ObjectURN>urn:oma:lwm2m:ext:9999</ObjectURN>
+  <LWM2MVersion>1.1</LWM2MVersion><ObjectVersion>1.0</ObjectVersion>
+  <MultipleInstances>Single</MultipleInstances><Mandatory>Optional</Mandatory>
+  <Resources>
+    <Item ID="1"><Name>Link</Name><Operations>RW</Operations>
+      <MultipleInstances>Single</MultipleInstances><Mandatory>Optional</Mandatory>
+      <Type>Objlnk</Type><RangeEnumeration></RangeEnumeration>
+      <Units></Units><Description>Object link</Description></Item>
+  </Resources><Description2></Description2>
+</Object></LWM2M>`;
+      const result = oma2sdf.createSdf(xml, false, false);
+      const prop = result.sdfObject.Test.sdfProperty.Link;
+      assert.strictEqual(prop.sdfRef, 'oma:objlnk');
+    });
+
+    it('should convert Corelnk to sdfRef', function() {
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<LWM2M><Object ObjectType="MODefinition">
+  <Name>Test</Name><Description1>Test</Description1>
+  <ObjectID>9999</ObjectID><ObjectURN>urn:oma:lwm2m:ext:9999</ObjectURN>
+  <LWM2MVersion>1.1</LWM2MVersion><ObjectVersion>1.0</ObjectVersion>
+  <MultipleInstances>Single</MultipleInstances><Mandatory>Optional</Mandatory>
+  <Resources>
+    <Item ID="1"><Name>Link</Name><Operations>RW</Operations>
+      <MultipleInstances>Single</MultipleInstances><Mandatory>Optional</Mandatory>
+      <Type>Corelnk</Type><RangeEnumeration></RangeEnumeration>
+      <Units></Units><Description>Core link</Description></Item>
+  </Resources><Description2></Description2>
+</Object></LWM2M>`;
+      const result = oma2sdf.createSdf(xml, false, false);
+      const prop = result.sdfObject.Test.sdfProperty.Link;
+      assert.strictEqual(prop.sdfRef, 'oma:corelnk');
+    });
+
+    it('should handle Objlnk with MultipleInstances', function() {
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<LWM2M><Object ObjectType="MODefinition">
+  <Name>Test</Name><Description1>Test</Description1>
+  <ObjectID>9999</ObjectID><ObjectURN>urn:oma:lwm2m:ext:9999</ObjectURN>
+  <LWM2MVersion>1.1</LWM2MVersion><ObjectVersion>1.0</ObjectVersion>
+  <MultipleInstances>Single</MultipleInstances><Mandatory>Optional</Mandatory>
+  <Resources>
+    <Item ID="1"><Name>Links</Name><Operations>RW</Operations>
+      <MultipleInstances>Multiple</MultipleInstances><Mandatory>Optional</Mandatory>
+      <Type>Objlnk</Type><RangeEnumeration></RangeEnumeration>
+      <Units></Units><Description>Object links</Description></Item>
+  </Resources><Description2></Description2>
+</Object></LWM2M>`;
+      const result = oma2sdf.createSdf(xml, false, false);
+      const prop = result.sdfObject.Test.sdfProperty.Links;
+      assert.strictEqual(prop.type, 'array');
+      assert.strictEqual(prop.items.sdfRef, 'oma:objlnk');
+    });
+  });
+
   describe('OMA ID Quality', function() {
     it('should include oma:id for object', function() {
       const xml = fs.readFileSync(path.join(__dirname, '..', 'samples', 'load.xml'), 'utf-8');
