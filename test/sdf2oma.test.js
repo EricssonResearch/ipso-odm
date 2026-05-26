@@ -735,6 +735,36 @@ describe('SDF to OMA Converter', function() {
       assert(obj, 'Should produce valid XML even with special chars');
     });
 
+    it('should properly escape < and > in description text', function() {
+      const sdf = {
+        info: { title: 'Test', copyright: 'Copyright' },
+        sdfObject: {
+          Test: {
+            description: 'Measured value where <threshold> is exceeded',
+            sdfProperty: {
+              value: {
+                type: 'number',
+                description: 'Value in range <min> to <max>'
+              }
+            }
+          }
+        }
+      };
+
+      const xml = sdf2oma.getFormattedXml(sdf);
+      // Should produce parseable XML (< and > must be escaped)
+      const doc = new xmldoc.XmlDocument(xml);
+      const obj = doc.childNamed('Object');
+      const desc1 = obj.childNamed('Description1').val;
+      assert.strictEqual(desc1, 'Measured value where <threshold> is exceeded',
+        'Object description should preserve < and > characters');
+
+      const item = obj.childNamed('Resources').childNamed('Item');
+      const resDesc = item.childNamed('Description').val;
+      assert.strictEqual(resDesc, 'Value in range <min> to <max>',
+        'Resource description should preserve < and > characters');
+    });
+
     it('should produce properly nested XML structure', function() {
       const sdf = {
         info: { title: 'Test', copyright: '', license: '' },

@@ -9,6 +9,20 @@ const debug = require('debug')('sdf2oma');
 const { toXML } = require('jstoxml');
 const NO_ESCAPE = { contentReplacements: false };
 
+/**
+ * Escapes XML special characters in text content
+ * @param {string} str The string to escape
+ * @returns {string} The escaped string
+ */
+function escapeXml(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 const LWM2M_VERSION = "1.1";
 const OBJECT_VERSION = "1.0";
 const OBJ_URN_BASE = 'urn:oma:lwm2m:';
@@ -86,7 +100,7 @@ function translateSDFObject(sdf) {
   }
 
   if ('description' in sdfobject) {
-    ipsoinfo.Description1 = sdfobject.description;
+    ipsoinfo.Description1 = escapeXml(sdfobject.description);
   }
 
   ipsoinfo.ObjectID = objid;
@@ -205,7 +219,7 @@ function translateResources(sdf, objName) {
 
       ipsoproperty.Units = sdfresource.unit ? sdfresource.unit : '';
 
-      ipsoproperty.Description = sdfresource.description;
+      ipsoproperty.Description = escapeXml(sdfresource.description);
 
       if (OMA_ID_QUALITY in sdfresource) {
         resourceID = sdfresource[OMA_ID_QUALITY];
