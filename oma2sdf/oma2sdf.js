@@ -9,8 +9,10 @@ const debug = require('debug')('oma2sdf');
 
 const TITLE_PREFIX = "OMA LwM2M";
 const VERSION = "2026-05-19";
-const LWM2M_SDF_NS = "https://onedm.org/ecosystem/oma";
+const LWM2M_SDF_NS = "https://models.openmobilealliance.org/";
 const LWM2M_NS_PREFIX = "oma";
+const OMA_TYPES_NS = "https://models.openmobilealliance.org/#/sdfData/";
+const OMA_TYPES_PREFIX = "omatypes";
 
 const SDF_FILE_PREFIX = "sdfobject-";
 const SDF_FILE_SUFFIX = ".sdf.json";
@@ -131,6 +133,11 @@ function createSdf(data, copyrFromFile, licenseFromFile,
   sdf.sdfObject = sdfObj;
 
   addResources(xmlObj, sdf, objJSONName, reusableResRefs);
+
+  /* add omatypes namespace only if it's actually referenced */
+  if (USE_LWM2M_NS && JSON.stringify(sdf).includes(OMA_TYPES_PREFIX + ":")) {
+    sdf.namespace[OMA_TYPES_PREFIX] = OMA_TYPES_NS;
+  }
 
   return sdf;
 };
@@ -289,10 +296,10 @@ function addResourceType(sdfProp, lwm2mElement) {
       sdfType = "unix-time";
       break;
     case "objlnk":
-      sdfRef = "oma:objlnk";
+      sdfRef = "omatypes:objlink";
       break;
     case "corelnk":
-      sdfRef = "oma:corelnk";
+      sdfRef = "omatypes:corelink";
       break;
     default:
       throw new Error("Unsupported LwM2M type: " + lwType);

@@ -397,7 +397,7 @@ describe('OMA to SDF Converter', function() {
 </Object></LWM2M>`;
       const result = oma2sdf.createSdf(xml, false, false);
       const prop = result.sdfObject.Test.sdfProperty.Link;
-      assert.strictEqual(prop.sdfRef, 'oma:objlnk');
+      assert.strictEqual(prop.sdfRef, 'omatypes:objlink');
     });
 
     it('should convert Corelnk to sdfRef', function() {
@@ -416,7 +416,7 @@ describe('OMA to SDF Converter', function() {
 </Object></LWM2M>`;
       const result = oma2sdf.createSdf(xml, false, false);
       const prop = result.sdfObject.Test.sdfProperty.Link;
-      assert.strictEqual(prop.sdfRef, 'oma:corelnk');
+      assert.strictEqual(prop.sdfRef, 'omatypes:corelink');
     });
 
     it('should handle Objlnk with MultipleInstances', function() {
@@ -436,7 +436,7 @@ describe('OMA to SDF Converter', function() {
       const result = oma2sdf.createSdf(xml, false, false);
       const prop = result.sdfObject.Test.sdfProperty.Links;
       assert.strictEqual(prop.type, 'array');
-      assert.strictEqual(prop.items.sdfRef, 'oma:objlnk');
+      assert.strictEqual(prop.items.sdfRef, 'omatypes:objlink');
     });
   });
 

@@ -418,13 +418,13 @@ describe('SDF to OMA Converter', function() {
 
 
   describe('Link Type Conversions', function() {
-    it('should convert sdfRef oma:objlnk to Objlnk type', function() {
+    it('should convert sdfRef omatypes:objlink to Objlnk type', function() {
       const sdf = {
         info: { title: 'Test', copyright: '', license: '' },
         sdfObject: {
           Test: {
             sdfProperty: {
-              link: { sdfRef: 'oma:objlnk', description: 'Object link' }
+              link: { sdfRef: 'omatypes:objlink', description: 'Object link' }
             }
           }
         }
@@ -433,13 +433,13 @@ describe('SDF to OMA Converter', function() {
       assert(xml.includes('<Type>Objlnk</Type>'));
     });
 
-    it('should convert sdfRef oma:corelnk to Corelnk type', function() {
+    it('should convert sdfRef omatypes:corelink to Corelnk type', function() {
       const sdf = {
         info: { title: 'Test', copyright: '', license: '' },
         sdfObject: {
           Test: {
             sdfProperty: {
-              link: { sdfRef: 'oma:corelnk', description: 'Core link' }
+              link: { sdfRef: 'omatypes:corelink', description: 'Core link' }
             }
           }
         }
@@ -456,7 +456,7 @@ describe('SDF to OMA Converter', function() {
             sdfProperty: {
               links: {
                 type: 'array',
-                items: { sdfRef: 'oma:objlnk' },
+                items: { sdfRef: 'omatypes:objlink' },
                 description: 'Object links'
               }
             }

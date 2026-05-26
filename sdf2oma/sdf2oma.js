@@ -181,10 +181,8 @@ function translateResources(sdf, objName) {
           ipsoproperty.Operations = "";
         }
       }
-      if ('type' in sdfresource) {
-        ipsoproperty.MultipleInstances = (sdfresource.type == 'array') ?
-          ('Multiple') : ('Single');
-      }
+      ipsoproperty.MultipleInstances = (sdfresource.type == 'array') ?
+        'Multiple' : 'Single';
       if ('sdfRequired' in sdf.sdfObject[objName]) {
         let required = sdf.sdfObject[objName].sdfRequired;
         if ((required.includes("#/sdfObject/" + objName + "/" + capability +
@@ -244,9 +242,9 @@ function translateResources(sdf, objName) {
 function convertType(type, sdfType, min, sdfRef) {
   let lwType;
 
-  if (sdfRef === "oma:objlnk") {
+  if (sdfRef === "omatypes:objlink") {
     return "Objlnk";
-  } else if (sdfRef === "oma:corelnk") {
+  } else if (sdfRef === "omatypes:corelink") {
     return "Corelnk";
   }
 
