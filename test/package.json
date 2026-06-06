@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Test suite for OMA-SDF translation toolkit",
   "scripts": {
-    "test": "mocha *.test.js --timeout 5000",
+    "test": "DEBUG='oma2sdf,sdf2oma' mocha *.test.js --timeout 5000",
     "test:oma2sdf": "mocha oma2sdf.test.js",
     "test:sdf2oma": "mocha sdf2oma.test.js",
     "test:roundtrip": "mocha roundtrip.test.js",

@@ -163,6 +163,73 @@ describe('OMA to SDF Converter', function() {
       });
     });
 
+    function makeXmlWithType(typeLine) {
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<LWM2M>
+  <Object ObjectType="MODefinition">
+    <Name>Test</Name>
+    <Description1>Test</Description1>
+    <ObjectID>9999</ObjectID>
+    <ObjectURN>urn:oma:lwm2m:ext:9999</ObjectURN>
+    <LWM2MVersion>1.0</LWM2MVersion>
+    <ObjectVersion>1.0</ObjectVersion>
+    <MultipleInstances>Single</MultipleInstances>
+    <Mandatory>Optional</Mandatory>
+    <Resources>
+      <Item ID="5700">
+        <Name>Value</Name>
+        <Operations>R</Operations>
+        <MultipleInstances>Single</MultipleInstances>
+        <Mandatory>Optional</Mandatory>
+        ${typeLine}
+        <RangeEnumeration></RangeEnumeration>
+        <Units></Units>
+        <Description>Test resource</Description>
+      </Item>
+    </Resources>
+    <Description2></Description2>
+  </Object>
+</LWM2M>`;
+    }
+
+    it('should not throw when Type element is missing from a resource', function() {
+      const xml = makeXmlWithType('');
+      const result = oma2sdf.createSdf(xml, false, false);
+      const prop = result.sdfObject.Test.sdfProperty.Value;
+      assert(prop, 'Property should still be created');
+      assert.strictEqual(prop.type, undefined, 'Should not have a type when Type element is missing');
+    });
+
+    it('should emit debug warning when Type element is missing', function() {
+      const xml = makeXmlWithType('');
+
+      let debugOutput = '';
+      const origWrite = process.stderr.write;
+      process.stderr.write = function(chunk) {
+        debugOutput += chunk.toString();
+        return origWrite.apply(process.stderr, arguments);
+      };
+
+      try {
+        oma2sdf.createSdf(xml, false, false);
+      } finally {
+        process.stderr.write = origWrite;
+      }
+
+      assert(debugOutput.includes('missing Type element'),
+        'Should emit debug warning about missing Type element');
+      assert(debugOutput.includes('5700'),
+        'Should include resource ID 5700 in warning');
+    });
+
+    it('should not throw when Type element is empty', function() {
+      const xml = makeXmlWithType('<Type></Type>');
+      const result = oma2sdf.createSdf(xml, false, false);
+      const prop = result.sdfObject.Test.sdfProperty.Value;
+      assert(prop, 'Property should still be created');
+      assert.strictEqual(prop.type, undefined, 'Should not have a type when Type element is empty');
+    });
+
     it('should throw error when Mandatory element is missing', function() {
       const xmlMissingMandatory = `<?xml version="1.0" encoding="UTF-8"?>
 <LWM2M>

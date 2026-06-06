@@ -268,6 +268,8 @@ function addResourceType(sdfProp, lwm2mElement) {
   let sdfRef;
 
   if (!typeElement || !typeElement.val) {
+    debug("Warning: missing Type element or content in resource " +
+      (lwm2mElement.attr && lwm2mElement.attr.ID || "unknown"));
     return; /* missing element or content */
   }
 
