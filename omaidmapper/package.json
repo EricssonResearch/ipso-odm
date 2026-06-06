@@ -1,5 +1,5 @@
 {
-  "name": "ipsoidmapper",
+  "name": "omaidmapper",
   "version": "0.2.0",
   "description": "OMA Object ID mapper",
   "main": "omaidmapper.js",

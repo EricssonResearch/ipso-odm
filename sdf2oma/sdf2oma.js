@@ -34,7 +34,7 @@ const OMA_ID_QUALITY = "oma:id";
 
 
 
-/* convert name underscores to spaces (for ipso2sdf round trip) */
+/* convert name underscores to spaces (for oma2sdf round trip) */
 const NAMEFIX_RE = new RegExp('[_]', "g");
 const NAMEFIX_CHAR = " ";
 
