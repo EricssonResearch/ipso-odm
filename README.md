@@ -44,7 +44,7 @@ Example: `node omaidmapper samples/*.xml`
 
 The oma2sdf, sdf2oma, and sdflint programs can also run in a web service mode with `oma-sdf-ws`. The web service mode is not installed by default but can be installed with:
 
-`npm install oma-sdf-ws`
+`cd oma-sdf-ws && npm install`
 
 If sdflint functionality is needed, the sdflint submodule needs to be initiated:
 `git submodule update --init`
