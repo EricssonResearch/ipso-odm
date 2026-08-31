@@ -44,7 +44,7 @@ Example: `node ipsoidmapper samples/*.xml`
 
 The ipso2odm, odm2ipso, and sdflint programs can also run in a web service mode with `ipso-odm-ws`. The web service mode is not installed by default but can be installed with:
 
-`npm install ipso-odm-ws`
+`cd ipso-odm-ws && npm install`
 
 If sdflint functionality is needed, the sdflint submodule needs to be initiated:
 `git submodule update --init`
