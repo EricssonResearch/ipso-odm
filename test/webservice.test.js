@@ -14,22 +14,37 @@ describe('Web Service', function() {
 
   before(function(done) {
     this.timeout(5000);
+    let started = false;
+    let stderr = '';
     serverProcess = spawn('node', [
       path.join(__dirname, '..', 'oma-sdf-ws', 'oma-sdf-ws.js')
     ], { env: { ...process.env, PORT: PORT } });
 
     serverProcess.stderr.on('data', (data) => {
-      // debug output goes to stderr
+      // debug output goes to stderr; kept for the error if startup fails
+      stderr += data;
     });
 
     serverProcess.stdout.on('data', (data) => {
-      if (data.toString().includes('Starting web service')) {
+      if (!started && data.toString().includes('Starting web service')) {
+        started = true;
         done();
       }
     });
 
     serverProcess.on('error', (err) => {
-      done(err);
+      if (!started) {
+        started = true;
+        done(err);
+      }
+    });
+
+    serverProcess.on('exit', (code) => {
+      if (!started) {
+        started = true;
+        done(new Error('oma-sdf-ws exited with code ' + code +
+          ' before starting (run "npm run install:ws" in test/)\n' + stderr));
+      }
     });
   });
 
